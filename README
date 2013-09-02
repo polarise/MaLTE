@@ -4,7 +4,7 @@ Changes:
 - made 'get.predictions()' much faster using unlist( list, F, F ) and *apply functions instead of a for loop
 
 17-08-2013
-- fixed a bug that prevented 'get.predictions()' for transcript isoform expression with more than one isoform filtered (PENDING!!!)
+- fixed a bug that prevented 'get.predictions()' for transcript isoform expression with more than one isoform filtered (DONE)
 
 0.1-6:
 15-08-2013
