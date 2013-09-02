@@ -1,0 +1,30 @@
+# hts.test is either numeric or logical hence the class union
+setClassUnion( "numericORlogical", c( "numeric", "logical" ))
+
+setClass( "TT.Params", representation( mtry="numeric", ntree="numeric", feature.select="logical", min.probes="numeric", cor.thresh="numeric", OOB="logical" ))
+
+# TT.Params constructor
+TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, cor.thresh=0, OOB=FALSE )
+{
+	# validation?
+	# 1 <= mtry <= 10
+	# 1 <= ntree <= 100000
+	# 1 <= min.probes <= 250
+	# -1 <= cor.thresh <= 1
+	
+	object <- new( "TT.Params", mtry=mtry, ntree=ntree, feature.select=feature.select, min.probes=min.probes, cor.thresh=cor.thresh, OOB=OOB )
+	
+	return( object )
+}
+
+setMethod( "show", signature( object="TT.Params" ), function( object )
+	{
+		cat( "mtry =", object@mtry, "\n" )
+		cat( "ntree =", object@ntree, "\n" )
+		cat( "feature.select =", object@feature.select, "\n" )
+		cat( "min.probes =", object@min.probes, "\n" )
+		cat( "cor.thresh =", object@cor.thresh, "\n" )
+		cat( "OOB =", object@OOB, "\n" )
+	}
+)
+
