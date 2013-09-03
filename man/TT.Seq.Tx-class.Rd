@@ -5,6 +5,7 @@
 \alias{gene.id,TT.Seq.Tx-method}
 \alias{tx.id,TT.Seq.Tx-method}
 \alias{predictions,TT.Seq.Tx-method}
+\alias{trues,TT.Seq.Tx-method}
 \alias{show,TT.Seq.Tx-method}
 
 \title{Class \code{"TT.Seq.Tx"}}

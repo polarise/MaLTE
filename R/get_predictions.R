@@ -68,7 +68,7 @@ get.predictions <- function( tt.seq, sample.names )
 					}
 				} else
 				{
-					m@predictions
+					predictions( m )
 				}
 			}
 		)

@@ -6,7 +6,19 @@ get.trues <- function( tt.seq, sample.names )
 		tt.p1 <- lapply( tt.seq,
 			function( m )
 			{
-				trues( m )
+				if ( length( m@trues ) != length( sample.names ) )
+				{
+					if ( is.na( m@trues ))
+					{
+						rep( NA, m@no.samples )
+					} else
+					{
+						stop( paste( "The number of true samples for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB).\n", sep="" ) )
+					}
+				} else
+				{
+					trues( m )
+				}
 			}
 		)
 		tt.p2 <- unlist( tt.p1, recursive=FALSE, use.names=FALSE )
@@ -34,9 +46,30 @@ get.trues <- function( tt.seq, sample.names )
 		tt.p1 <- lapply( tt.seq,
 			function( m )
 			{
-				m@trues
+				if ( m@no.txs == 1 )
+				{
+					no <- length( m@trues )
+				} else
+				{
+					no <- nrow( m@trues )
+				}
+				
+				if ( no != length( sample.names ) )
+				{
+					if ( is.na( m@trues ) )
+					{
+						rep( NA, m@no.samples*m@no.txs )
+					} else
+					{
+						stop( paste( "The number of true samples for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB).\n", sep="" ) )
+					}
+				} else
+				{
+					trues( m )
+				}
 			}
 		)
+	
 		tt.p2 <- unlist( tt.p1, recursive=FALSE, use.names=FALSE )
 		tt.p3 <- as.vector( tt.p2 )
 		tt.p4 <- matrix( tt.p3, nrow=length( txs.names ), byrow=TRUE )
