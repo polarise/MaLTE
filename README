@@ -1,20 +1,27 @@
 Changes:
 0.1-8:
 03-09-2013
-- Experimental: modified 'get.predictions()' to work on non-filtered tt.seq lists
+- Experimental: modified 'get.predictions()' to work on non-filtered tt.seq 
+	lists
+- Experimental: added a 'get.trues()' function that can work on non-filtered 
+	tt.seq.lists
 
 0.1-7:
 22-08-2013
-- made 'get.predictions()' much faster using unlist( list, F, F ) and *apply functions instead of a for loop
+- made 'get.predictions()' much faster using unlist( list, F, F ) and *apply 
+	functions instead of a for loop
 
 17-08-2013
-- fixed a bug that prevented 'get.predictions()' for transcript isoform expression with more than one isoform filtered (DONE)
+- fixed a bug that prevented 'get.predictions()' for transcript isoform 
+	expression with more than one isoform filtered (DONE)
 
 0.1-6:
 15-08-2013
 - refactored 'prepare_txs_data.py'
-- fixed a bug in the OOB filter function that prevented filtering of genes with single transcripts that didn't pass OOB
-- added a feature to include transcript correlations in the rare event that both RNA-Seq and array data is available for test samples
+- fixed a bug in the OOB filter function that prevented filtering of genes with 
+	single transcripts that didn't pass OOB
+- added a feature to include transcript correlations in the rare event that both 
+	RNA-Seq and array data is available for test samples
 
 16-08-2013
 - fixed the above bug on filtering transcripts
@@ -26,7 +33,8 @@ Changes:
 
 0.1-4:
 13-08-2013
-- included parallel execution to create resource files used to build training and test data
+- included parallel execution to create resource files used to build training 
+	and test data
 
 0.1-3:
 05-08-2013

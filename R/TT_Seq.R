@@ -101,6 +101,22 @@ setMethod(
 	}
 )
 
+# trues()
+setGeneric(
+	name="trues",
+	function( object )
+		standardGeneric( "trues" )
+)
+setMethod(
+	f="trues",
+	signature( object="TT.Seq.Gene" ),
+	function( object )
+	{
+		trues <- object@trues
+		return( trues )
+	}
+)
+
 # gene.id()
 setGeneric( 
 	name="gene.id", 
@@ -187,6 +203,17 @@ setMethod(
 	
 		preds <- t( object@predictions ) # assume that nothing breaks
 		return( preds )
+	}
+)
+
+# trues()
+setMethod(
+	f="trues",
+	signature( object="TT.Seq.Tx" ),
+	function( object )
+	{
+		trues <- t( object@trues )
+		return( trues )
 	}
 )
 
