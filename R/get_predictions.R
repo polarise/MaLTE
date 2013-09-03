@@ -11,7 +11,13 @@ get.predictions <- function( tt.seq, sample.names )
 			function( m ){
 				if ( length( m@predictions ) != length( sample.names ) )
 				{
-					stop( paste( "The number of samples predicted for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB). Alternatively, if you are running get.predictions() on tt.seq instead of on tt.filtered it is likely that this gene has no predictions (NA).\n", sep="" ) )
+					if ( is.na( m@predictions ))
+					{
+						rep( NA, m@no.samples )
+					} else
+					{
+						stop( paste( "The number of samples predicted for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB). Alternatively, if you are running get.predictions() on tt.seq instead of on tt.filtered it is likely that this gene has no predictions (NA).\n", sep="" ) )
+					}
 				} else
 				{
 					predictions( m )
@@ -53,10 +59,13 @@ get.predictions <- function( tt.seq, sample.names )
 				
 				if ( no != length( sample.names ) )
 				{
-					stop( paste( "The number of samples predicted for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB). Alternatively, if you are running get.predictions() on tt.seq instead of on tt.filtered it is likely that this gene has no predictions (NA).\n", sep="" ) )
-				} else if ( no != length( sample.names ) )
-				{
-					stop( paste( "The number of samples predicted for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB). Alternatively, if you are running get.predictions() on tt.seq instead of on tt.filtered it is likely that this gene has no predictions (NA).\n", sep="" ) )
+					if ( is.na( m@predictions ) )
+					{
+						rep( NA, m@no.samples*m@no.txs )
+					} else
+					{
+						stop( paste( "The number of samples predicted for gene ", m@gene.id, " is different from the number of sample names. Ensure that when you run get.names( ) you set test to either 'TRUE' for test samples or 'FALSE' for training samples (e.g. OOB). Alternatively, if you are running get.predictions() on tt.seq instead of on tt.filtered it is likely that this gene has no predictions (NA).\n", sep="" ) )
+					}
 				} else
 				{
 					m@predictions

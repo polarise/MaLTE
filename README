@@ -1,4 +1,8 @@
 Changes:
+0.1-8:
+03-09-2013
+- Experimental: modified 'get.predictions()' to work on non-filtered tt.seq lists
+
 0.1-7:
 22-08-2013
 - made 'get.predictions()' much faster using unlist( list, F, F ) and *apply functions instead of a for loop
