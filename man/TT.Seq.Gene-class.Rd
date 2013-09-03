@@ -40,6 +40,7 @@ Class \code{"\linkS4class{TT.Seq}"}, directly.
   \describe{
     \item{gene.id}{\code{signature(object = "TT.Seq.Gene")}: Accessor function for gene identifier. }
     \item{predictions}{\code{signature(object = "TT.Seq.Gene")}: Accessor function for predicted expression. }
+    \item{trues}{\code{signature(object = "TT.Seq.Gene")}: Accessor function for true expression. }
     \item{show}{\code{signature(object = "TT.Seq.Gene")}: Shows the gene ID, mean and variance of predictions, number of samples and whether or not this was an OOB prediction.}
 	 }
 }

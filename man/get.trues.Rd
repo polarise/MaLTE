@@ -1,8 +1,8 @@
-\name{get.predictions}
-\alias{get.predictions}
+\name{get.trues}
+\alias{get.trues}
 
 \title{
-Get a data.frame of the predicted expression estimates.
+Get a data.frame of the true expression estimates.
 }
 
 \description{
@@ -10,7 +10,7 @@ The sample names will be required in the output data when carrying out downstrea
 }
 
 \usage{
-get.predictions(tt.seq, sample.names)
+get.trues(tt.seq, sample.names)
 }
 
 \arguments{
@@ -19,7 +19,7 @@ get.predictions(tt.seq, sample.names)
 }
 
 \value{
-Returns a data.frame of predicted expression estimates. The first column is the gene identifier field.
+Returns a data.frame of true expression estimates (RNA-Seq). The first column is the gene identifier field.
 }
 
 \author{
@@ -27,7 +27,7 @@ Paul K. Korir
 }
 
 \note{
-May be run on both filtered and non-filtered tt.seq lists.
+May be run on both filtered or non-filtered \code{tt.seq} lists.
 }
 
 \seealso{
@@ -67,11 +67,11 @@ tt.filtered <- oob.filter( tt.seq, tt.seq.oob )
 sample.names <- get.names( samples.fn )
 sample.names <- get.test( samples.fn )
 
-# get the predicted expression estiamtes before OOB filtering
-df.preds <- get.predictions( tt.seq, sample.names )
-
 # get the predicted expression estimates after OOB filtering
-df.preds.oob <- get.predictions( tt.filtered, sample.names )
+df.preds <- get.predictions( tt.filtered, sample.names )
+
+# get the true expression estimates before OOB filtering
+df.trues <- get.trues( tt.seq, sample.names )
 }
 
 \keyword{predictions}
