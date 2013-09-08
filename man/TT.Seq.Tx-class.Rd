@@ -7,6 +7,8 @@
 \alias{predictions,TT.Seq.Tx-method}
 \alias{trues,TT.Seq.Tx-method}
 \alias{show,TT.Seq.Tx-method}
+\alias{cor.P,TT.Seq.Tx-method}
+\alias{cor.S,TT.Seq.Tx-method}
 
 \title{Class \code{"TT.Seq.Tx"}}
 
@@ -42,11 +44,21 @@ Class \code{"\linkS4class{TT.Seq}"}, directly.
 
 \section{Methods}{
   \describe{
-    \item{gene.id}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for gene identifier. }
-    \item{tx.id}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for transcript identifier(s). }
-    \item{predictions}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for predicted expression. }
-    \item{trues}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for true expression. }
-    \item{show}{\code{signature(object = "TT.Seq.Tx")}: Shows the gene and transcript(s) ID, number of transcripts present, mean and variance of predictions, number of samples and whether or not this was an OOB prediction. }
+    \item{gene.id}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for
+     gene identifier. }
+    \item{tx.id}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for 
+    transcript identifier(s). }
+    \item{predictions}{\code{signature(object = "TT.Seq.Tx")}: Accessor function
+     for predicted expression. }
+    \item{trues}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for 
+    true expression. }
+    \item{show}{\code{signature(object = "TT.Seq.Tx")}: Shows the gene and 
+    transcript(s) ID, number of transcripts present, mean and variance of 
+    predictions, number of samples and whether or not this was an OOB prediction. }
+    \item{cor.P}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for
+    Pearson correlation coefficient.}
+    \item{cor.S}{\code{signature(object = "TT.Seq.Tx")}: Accessor function for
+    Spearman correlation coefficient.}
 	 }
 }
 
