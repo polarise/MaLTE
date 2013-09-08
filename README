@@ -1,4 +1,13 @@
 Changes:
+0.2:
+08-09-2013
+- Added TT.Seq.[Gene/Tx] methods: 'cor.P()' and 'cor.S()' to get Pearson and 
+	Spearman correlations with RNA-Seq expression
+- Added utility functions: 'cors.P()' and 'cors.S()' to collate vectors of 
+	correlation
+- Added utility funtions to compare MaLTE with microarray summarisation results:
+	'compare.correlations()'
+
 0.1-8:
 03-09-2013
 - Experimental: modified 'get.predictions()' to work on non-filtered tt.seq 

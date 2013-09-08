@@ -133,6 +133,36 @@ setMethod(
 	}
 )
 
+# cor.P()
+setGeneric(
+	name="cor.P",
+	function( object )
+		standardGeneric( "cor.P" )
+)
+setMethod(
+	f="cor.P",
+	signature( object="TT.Seq.Gene" ),
+	function( object )
+	{
+		return( object@cor.P )
+	}
+)
+
+# cor.S()
+setGeneric(
+	name="cor.S",
+	function( object )
+		standardGeneric( "cor.S" )
+)
+setMethod(
+	f="cor.S",
+	signature( object="TT.Seq.Gene" ),
+	function( object )
+	{
+		return( object@cor.S )
+	}
+)
+
 #-------------------------------------------------------------------------------
 #
 # TT.Seq.Tx Class
@@ -244,4 +274,22 @@ setMethod(
 	}
 )
 
+# cor.P()
+setMethod(
+	f="cor.P",
+	signature( object="TT.Seq.Tx" ),
+	function( object )
+	{
+		return( object@cor.P )
+	}
+)
 
+# cor.S()
+setMethod(
+	f="cor.S",
+	signature( object="TT.Seq.Tx" ),
+	function( object )
+	{
+		return( object@cor.S )
+	}
+)
