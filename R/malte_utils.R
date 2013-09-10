@@ -69,7 +69,7 @@
 compare.correlations <- function( tt.seq, affy.fn )
 {
 	# read in the Affymetrix RMA/PLIER (or other summarisation) results
-	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F )
+	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F, check.names=F, comment.char="#" )
 	
 	# convert it to a list
 	affy.mixed.test.list <- apply( affy.mixed.test, 1, .df_to_list )
@@ -118,7 +118,7 @@ within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", che
 {
 	# make sure the affy.name is valid
 	if ( check.names )
-		affy.fn <- make.names( affy.fn ) # 'median-polish' becomes 'median.polish'
+		affy.name <- make.names( affy.name ) # 'median-polish' becomes 'median.polish'
 	
 	# read in the Affymetrix RMA/PLIER (or other summarisation) results
 	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F, check.names=F, comment.char="#" )
