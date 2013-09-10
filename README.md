@@ -3,6 +3,11 @@ MaLTE
 Machine Learning of Transcript Expression
 
 News:
+0.2-1:
+10-09-2013
+- Added a utility function to estimate within-sample correlations + 
+	documentation
+
 0.2:
 08-09-2013
 - Added TT.Seq.[Gene/Tx] methods: 'cor.P()' and 'cor.S()' to get Pearson and 

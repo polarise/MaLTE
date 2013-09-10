@@ -113,3 +113,94 @@ cors.S <- function( tt.seq )
 	cors <- as.vector( unlist( lapply( tt.seq, cor.S )))
 	return( cors )
 }
+
+within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", check.names=TRUE  )
+{
+	# make sure the affy.name is valid
+	if ( check.names )
+		affy.fn <- make.names( affy.fn ) # 'median-polish' becomes 'median.polish'
+	
+	# read in the Affymetrix RMA/PLIER (or other summarisation) results
+	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F )
+	
+	# convert it to a list
+	affy.mixed.test.list <- apply( affy.mixed.test, 1, .df_to_list )
+	
+	# get the gene names in the Affymetrix data
+	affy.genes <- as.vector( sapply( affy.mixed.test.list, function( m ){ m$genes }))
+
+	# get the MaLTE gene names
+	genes <- as.vector( sapply( tt.seq, function( m ){ m@gene.id } ))
+
+	# add the true (RNA-Seq) expression values to the Affymetrix data
+	aug.affy.mixed.test.list <- mclapply( affy.mixed.test.list, .add.trues.affy.list, tt.seq, genes  )
+
+	# data frames for results
+	within.P <- data.frame()
+	within.S <- data.frame()
+
+	# vectors for intermediate results
+	within.cors.P <- c()
+	within.cors.S <- c()
+	affy.within.cors.P <- c()
+	affy.within.cors.S <- c()
+
+	# determine the number of samples involved
+	no.samples <- tt.seq[[1]]@no.samples
+
+	# calculate the within-sample correlation
+	# for each sample...
+	for ( i in 1:no.samples )
+	{
+		# get the true estimates (RNA-Seq) and MaLTE predictions from tt.seq list
+		samp.trues <- as.vector( unlist( lapply( tt.seq, function( m ){ m@trues[i] })))
+		samp.preds <- as.vector( unlist( lapply( tt.seq, function( m ){ m@predictions[i] })))
+	
+		# get the true estimates and summarisations from aug.affy.mixed.test.list
+		affy.trues <- as.vector( unlist( lapply( aug.affy.mixed.test.list, function( m ){ m$trues[i] })))
+		affy.preds <- as.vector( unlist( lapply( aug.affy.mixed.test.list, function( m ){ m$predictions[i] })))
+	
+		# compute respective correlations for MaLTE
+		cor.P <- as.vector( cor.test( samp.trues, samp.preds )$estimate )
+		cor.S <- as.vector( cor.test( samp.trues, samp.preds, me="sp" )$estimate )
+	
+		# compute respective correlations for summarisation
+		affy.cor.P <- as.vector( cor.test( affy.trues, affy.preds )$estimate )
+		affy.cor.S <- as.vector( cor.test( affy.trues, affy.preds, me="sp" )$estimate )
+	
+		# append correlations to the data frame for MaLTE
+		within.cors.P <- c( within.cors.P, cor.P )
+		within.cors.S <- c( within.cors.S, cor.S )
+	
+		# append correlations to the data frame for summarisation
+		affy.within.cors.P <- c( affy.within.cors.P, affy.cor.P )
+		affy.within.cors.S <- c( affy.within.cors.S, affy.cor.S )
+	}
+
+	# some ad hoc stuff
+	# put the Pearsons together
+	within.P <- rbind( within.P, within.cors.P )
+	within.P <- rbind( within.P, affy.within.cors.P )
+
+	# put the Spearmans together
+	within.S <- rbind( within.S, within.cors.S )
+	within.S <- rbind( within.S, affy.within.cors.S )
+
+	# add sample labels
+	colnames( within.P ) <- paste( "S", 1:no.samples, sep="" )
+	colnames( within.S ) <- paste( "S", 1:no.samples, sep="" )
+
+	# transpose
+	within.P <- data.frame( t( within.P ))
+	within.S <- data.frame( t( within.S ))
+
+	# add method labels
+	names <- c( "MaLTE", affy.name )
+
+	colnames( within.P ) <- names
+	colnames( within.S ) <- names
+
+	# return as a list
+	list( Pearson=within.P, Spearman=within.S )
+}
+
