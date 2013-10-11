@@ -61,10 +61,10 @@ train.and.predict <-
 			r.pred <- predict( model, newdata=D.f )
 		}
 		
-		if ( OOB | length( object@hts.test ) == object@no.test )
+		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ))
 		{
 			# Spearman correlation
-			cor_S <- cor.test( r.f, r.pred,method="spearman", continuity=T)
+			cor_S <- cor.test( r.f, r.pred, method="spearman", continuity=T )
 			cor.S <- cor_S$estimate		# estimate
 			cor.S.pv <- cor_S$p.value	# p-value
 		
@@ -78,7 +78,7 @@ train.and.predict <-
 		means <- mean( r.pred, na.rm=T )
 		vars <- var( r.pred, na.rm=T )
 		
-		if ( OOB | length( object@hts.test ) == object@no.test )
+		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ) )
 		{
 			m <- list( gene.id=object@gene.id, no.samples=object@no.test, trues=r.f, predictions=as.vector( r.pred ), cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
 		} else
@@ -154,7 +154,8 @@ train.and.predict.txs <-
 		}
 		
 
-		if ( OOB | dim( object@hts.test )[1] == object@no.test ){
+		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 ))
+		{
 			# Spearman correlation
 			cor.S <- diag( cor( r.f, r.pred, method="spearman" ))
 			cor.S.pv <- NA
@@ -168,7 +169,7 @@ train.and.predict.txs <-
 		means <- colMeans( r.pred, na.rm=T )
 		vars <- diag( var( r.pred, na.rm=T ))
 		
-		if ( OOB | dim( object@hts.test )[1] == object@no.test )
+		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 ))
 		{
 			m <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
 		} else

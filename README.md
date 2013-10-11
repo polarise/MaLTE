@@ -3,6 +3,10 @@ MaLTE
 Machine Learning of Transcript Expression
 
 News:
+0.2-2:
+10-10-2013
+- Bug: avoid computing correlations when the number of test samples <=2
+
 0.2-1:
 10-09-2013
 - Added a utility function to estimate within-sample correlations + 
