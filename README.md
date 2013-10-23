@@ -3,6 +3,9 @@ MaLTE
 Machine Learning of Transcript Expression
 
 News:
+0.2-3:
+- Bug: '*NA' in samples.txt fails (FIXED)
+
 0.2-2:
 10-10-2013
 - Bug: avoid computing correlations when the number of test samples <=2

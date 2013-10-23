@@ -119,7 +119,7 @@ def get_sample_names( f ):
 		elif row[0] != 'h' and row_count == 0:
 			print >> sys.stderr, "Error: missing header in sample names file. Please add a header 'hts<tab>ma'."
 			sys.exit( 1 )
-		if L[0] == "NA":
+		if L[0] == "*NA":
 			test_ma_L += [L[1]]
 		elif L[0][0] == '*':
 			test_hts_L += [L[0].lstrip( '*' )]
