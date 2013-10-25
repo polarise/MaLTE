@@ -44,8 +44,10 @@ oob.filter <- function( list.objects, list.objects.oob, thresh=0 )
 	# check the class of object
 	if ( is( list.objects[[1]], "TT.Seq.Gene" ) & is( list.objects.oob[[1]], "TT.Seq.Gene" ) )
 	{
-		cor.P.oob <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P }))
-		tt.filtered <- list.objects[ which( cor.P.oob > thresh ) ]
+		cor.P.oob <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P })) # get the OOB Pearsons
+		cor.P.oob.pv <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P.pv })) # get the OOB Pearson p-values
+		cor.P.oob.passed <- cor.P.oob[ which( cor.P.oob.pv <= 0.05 ) ] # get the significant OOB Pearsons
+		tt.filtered <- list.objects[ which( cor.P.oob.passed > thresh ) ]
 	} else
 	if ( is( list.objects[[1]], "TT.Seq.Tx" ) &	is( list.objects.oob[[1]], "TT.Seq.Tx" ) )
 	{

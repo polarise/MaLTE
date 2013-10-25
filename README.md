@@ -3,6 +3,9 @@ MaLTE
 Machine Learning of Transcript Expression
 
 News:
+0.2-4:
+- OOB filter for genes now takes into account significant p-values (<=0.05)
+
 0.2-3:
 - Bug: '*NA' in samples.txt fails (FIXED)
 
