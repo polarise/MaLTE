@@ -10,7 +10,7 @@ TT.Params objects store the parameters needed for training and prediction. These
 }
 
 \usage{
-TT.Params(mtry = 2, ntree = 1000, feature.select = TRUE, min.probes = 15, cor.thresh = 0, OOB = FALSE)
+TT.Params(mtry = 2, ntree = 1000, feature.select = TRUE, min.probes = 15, cor.thresh = 0, OOB = FALSE, quantreg = FALSE)
 }
 
 \arguments{
@@ -20,6 +20,7 @@ TT.Params(mtry = 2, ntree = 1000, feature.select = TRUE, min.probes = 15, cor.th
   \item{min.probes}{the minimum number of probes used to effect feature selection}
   \item{cor.thresh}{feature selection is performed using the correlation of predictors with the response; the minimum correlation at which to accept predictors; default: zero}
   \item{OOB}{logical that determines whether test data will be used or use training data to perform out-of-bag predictions on the training data}
+  \item{quantreg}{logical; whether or not to use the \code{quantregForest} implementation that returns confidence intervals}
 }
 
 \value{Returns an object of class TT.Params}

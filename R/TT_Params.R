@@ -9,14 +9,15 @@ setClass(
 		feature.select="logical", 
 		min.probes="numeric", 
 		cor.thresh="numeric", 
-		OOB="logical" 
+		OOB="logical"
+		quantreg="logical" 
 	)
 )
 
 #
 # TT.Params constructor
 #
-TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, cor.thresh=0, OOB=FALSE )
+TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, cor.thresh=0, OOB=FALSE, quantreg=FALSE )
 {
 	# VALIDATION
 	# 1 <= mtry <= 10
@@ -36,7 +37,7 @@ TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, c
 		stop( "Invalid value for 'cor.thresh'. Should be between -1 and 1 inclusive." )
 	
 	# now it's safe to build the object
-	object <- new( "TT.Params", mtry=mtry, ntree=ntree, feature.select=feature.select, min.probes=min.probes, cor.thresh=cor.thresh, OOB=OOB )
+	object <- new( "TT.Params", mtry=mtry, ntree=ntree, feature.select=feature.select, min.probes=min.probes, cor.thresh=cor.thresh, OOB=OOB, quantreg=quantreg )
 	
 	return( object )
 }
@@ -55,5 +56,6 @@ setMethod(
 	cat( "min.probes     =", object@min.probes, "\n" )
 	cat( "cor.thresh     =", object@cor.thresh, "\n" )
 	cat( "OOB            =", object@OOB, "\n" )
+	cat( "QuantReg       =", object@quantreg, "\n" )
 	}
 )

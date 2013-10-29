@@ -10,7 +10,7 @@ Training is currently implemented using the conditional random forest algorithm 
 }
 
 \usage{
-train.and.predict(object, params.object)
+train.and.predict(object, params.object, quantreg=FALSE)
 }
 
 \arguments{

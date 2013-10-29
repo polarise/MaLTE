@@ -10,7 +10,7 @@ Performs training and prediction given an object of class \code{TT.Ready}.
 }
 
 \usage{
-run(object, params.object, OOB=FALSE )
+run(object, params.object, OOB=FALSE)
 }
 
 \arguments{

@@ -22,6 +22,7 @@ Objects can be created by calls of the form \code{new("TT.Params", ...)}.
     \item{\code{min.probes}:}{Object of class \code{"numeric"} ~~ }
     \item{\code{cor.thresh}:}{Object of class \code{"numeric"} ~~ }
     \item{\code{OOB}:}{Object of class \code{"logical"} ~~ }
+    \item{\code{quantreg}:}{Object of class \code{"logical"} ~~ }
   }
 }
 \section{Methods}{

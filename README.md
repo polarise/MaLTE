@@ -3,6 +3,9 @@ MaLTE
 Machine Learning of Transcript Expression
 
 News:
+0.2-5: EXPERIMENTAL
+- Incorporated quantregForest for interval estimation of predictions
+
 0.2-4:
 - OOB filter for genes now takes into account significant p-values (<=0.05)
 

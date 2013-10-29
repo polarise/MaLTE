@@ -17,11 +17,26 @@ train.and.predict <-
 	min.probes <- params.object@min.probes
 	cor.thresh <- params.object@cor.thresh
 	OOB <- params.object@OOB
+	quantreg <- params.object@quantreg
 	
 	# test whether there is data for training/testing
 	if ( is.na( object@probes.train ) || is.na( object@probes.test ) || mean( object@hts.train ) == 0.00 ) # ????
 	{
-		m <- list( gene.id=object@gene.id, no.samples=object@no.test, trues=object@hts.test, predictions=NA, cor.S=NA, cor.S.pv=NA, cor.P=NA, cor.P.pv=NA, means=NA, vars=NA, OOB=OOB )
+		m <- list(
+			gene.id=object@gene.id,
+			no.samples=object@no.test,
+			trues=object@hts.test,
+			predictions=NA,
+			predictions.upper=NA,
+			predictions.lower=NA,
+			cor.S=NA,
+			cor.S.pv=NA,
+			cor.P=NA,
+			cor.P.pv=NA,
+			means=NA,
+			vars=NA,
+			OOB=OOB
+		)
 		
 		m.obj <- TT.Seq.Gene( m )
 		
@@ -42,12 +57,25 @@ train.and.predict <-
 		}
 		
 		# the model
-		model <- cforest( y ~ ., data=D, controls=cforest_control( ntree=ntree, mincriterion=0.95, mtry=mtry ) )
+		if ( quantreg )
+		{
+			model <- quantregForest( y=D[,1], x=D[,2:ncol( D )], mtry=mtry, ntree=ntree )
+		} else
+		{
+			model <- cforest( y ~ ., data=D, controls=cforest_control( ntree=ntree, mincriterion=0.95, mtry=mtry ) )
+		}
 				
 		if ( OOB )
 		{
 			# estimate the prediction using OOB samples
-			r.pred <- predict( model, OOB=T )
+			if ( quantreg )
+			{
+				r.pred.all <- predict( model )
+				r.pred <- r.pred.all[,2]
+			} else
+			{
+				r.pred <- predict( model, OOB=TRUE )
+			}
 			r.f <- object@hts.train
 		} else
 		{
@@ -58,7 +86,14 @@ train.and.predict <-
 			colnames( D.f ) <- paste( "x", 1:object@no.probes, sep="" )
 		
 			# predict the new response
-			r.pred <- predict( model, newdata=D.f )
+			if ( quantreg )
+			{
+				r.pred.all <- predict( model, newdata=D.f )
+				r.pred <- r.pred.all[,2]
+			} else
+			{
+				r.pred <- predict( model, newdata=D.f )
+			}
 		}
 		
 		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ))
@@ -80,10 +115,38 @@ train.and.predict <-
 		
 		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ) )
 		{
-			m <- list( gene.id=object@gene.id, no.samples=object@no.test, trues=r.f, predictions=as.vector( r.pred ), cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
+			m <- list( 
+				gene.id=object@gene.id,
+				no.samples=object@no.test,
+				trues=r.f,
+				predictions=as.vector( r.pred ),
+				predictions.lower=if ( quantreg ){ as.vector( r.pred.all[,1] ) } else { NA },
+				predictions.upper=if ( quantreg ){ as.vector( r.pred.all[,3] ) } else { NA },
+				cor.S=cor.S,
+				cor.S.pv=cor.S.pv,
+				cor.P=cor.P,
+				cor.P.pv=cor.P.pv,
+				means=means,
+				vars=as.vector( vars ),
+				OOB=OOB
+			)
 		} else
 		{
-			m <- list( gene.id=object@gene.id, no.samples=object@no.test, trues=r.f, predictions=as.vector(r.pred), cor.S=NA, cor.S.pv=NA, cor.P=NA, cor.P.pv=NA, means=means, vars=as.vector( vars ), OOB=OOB )
+			m <- list(
+				gene.id=object@gene.id,
+				no.samples=object@no.test,
+				trues=r.f,
+				predictions=as.vector( r.pred ),
+				predictions.lower=if ( quantreg ){ as.vector( r.pred.all[,1] ) } else { NA },
+				predictions.upper=if ( quantreg ){ as.vector( r.pred.all[,3] ) } else { NA },
+				cor.S=NA,
+				cor.S.pv=NA,
+				cor.P=NA,
+				cor.P.pv=NA,
+				means=means,
+				vars=as.vector( vars ),
+				OOB=OOB
+			)
 		}
 				
 		m.obj <- TT.Seq.Gene( m )
@@ -91,7 +154,6 @@ train.and.predict <-
 		return( m.obj )
 	}
 }
-
 
 
 train.and.predict.txs <- 
