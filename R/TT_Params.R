@@ -9,7 +9,7 @@ setClass(
 		feature.select="logical", 
 		min.probes="numeric", 
 		cor.thresh="numeric", 
-		OOB="logical"
+		OOB="logical",
 		quantreg="logical" 
 	)
 )
