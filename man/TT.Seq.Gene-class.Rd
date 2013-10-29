@@ -25,6 +25,8 @@ Objects can be created by calls of the form \code{new("TT.Seq.Gene", ...)}.
     \item{\code{no.samples}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
     \item{\code{trues}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
     \item{\code{predictions}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
+    \item{\code{predictions.lower}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
+    \item{\code{predictions.upper}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
     \item{\code{cor.S}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
     \item{\code{cor.S.pv}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }
     \item{\code{cor.P}:}{Object of class \code{"numericORlogicalORmatrix"} ~~ }

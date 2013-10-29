@@ -82,14 +82,19 @@ train.and.predict <-
 			# use the testing data
 			m.f <- object@probes.test
 			r.f <- object@hts.test
-			D.f <- data.frame( r.f, m.f )			
-			colnames( D.f ) <- c( "y", paste( "x", 1:object@no.probes, sep="" ))
 			
 			if ( feature.select & object@no.probes > min.probes )
 			{
+				D.f <- data.frame( r.f, m.f )			
+				colnames( D.f ) <- c( "y", paste( "x", 1:object@no.probes, sep="" ))
 				D.f <- D.f[,order( cor.mat[1,], decreasing=T )[1:(min.probes+1)]] # retain only needed probes
-				D.f <- D.f[,2:ncol( D.f )]	# get rid of the response
+				D.f <- D.f[,2:ncol( D.f )]		# get rid of the response
+			} else
+			{
+				D.f <- data.frame( m.f )			
+				colnames( D.f ) <- paste( "x", 1:object@no.probes, sep="" )
 			}
+			
 		
 			# predict the new response
 			if ( quantreg )
@@ -106,12 +111,12 @@ train.and.predict <-
 		{
 			# Spearman correlation
 			cor_S <- cor.test( r.f, r.pred, method="spearman", continuity=T )
-			cor.S <- cor_S$estimate		# estimate
+			cor.S <- cor_S$estimate   # estimate
 			cor.S.pv <- cor_S$p.value	# p-value
 		
 			# Pearson correlation
 			cor_P <- cor.test( r.f, r.pred, method="pearson" )
-			cor.P <- cor_P$estimate		# estimate
+			cor.P <- cor_P$estimate   # estimate
 			cor.P.pv <- cor_P$p.value	# p-value
 		}
 		
