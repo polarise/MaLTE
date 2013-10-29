@@ -26,8 +26,8 @@ Here follows a detailed description of \code{m}:
     \item{\code{no.samples}:}{the number of test samples only}
     \item{\code{trues}:}{a vector of true HTS estimates of length no.samples}
     \item{\code{predictions}:}{a vector of predicted HTS estimates of length no.samples}
-    \item{\code{predictions.lower}:}{a vector of 5% quantiles of predicted HTS estimates obtained only when using \code{quantregForests}}
-    \item{\code{predictions.upper}:}{a vector of 95% quantiles of predicted HTS estimates obtained only when using \code{quantregForests}}
+    \item{\code{predictions.lower}:}{a vector of 5\% quantiles of predicted HTS estimates obtained only when using \code{quantregForests}}
+    \item{\code{predictions.upper}:}{a vector of 95\% quantiles of predicted HTS estimates obtained only when using \code{quantregForests}}
     \item{\code{cor.S}:}{the Spearman correlation coefficient between trues and predictions; only valid when trues exist or when predicting OOB estimates}
     \item{\code{cor.S.pv}:}{p-value for cor.S}
     \item{\code{cor.P}:}{the Pearson correlation coefficient between trues and predictions}
