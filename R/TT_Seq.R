@@ -21,6 +21,8 @@ setClass(
 		no.samples="numericORlogicalORmatrix", 
 		trues="numericORlogicalORmatrix", 
 		predictions="numericORlogicalORmatrix", 
+		predictions.lower="numericORlogicalORmatrix",
+		predictions.upper="numericORlogicalORmatrix",
 		cor.S="numericORlogicalORmatrix", 
 		cor.S.pv="numericORlogicalORmatrix", 
 		cor.P="numericORlogicalORmatrix", 
@@ -53,7 +55,9 @@ TT.Seq.Gene <- function( m )
 		gene.id=m$gene.id, 
 		no.samples=m$no.samples, 
 		trues=m$trues, 
-		predictions=m$predictions, 
+		predictions=m$predictions,
+		predictions.lower=m$predictions.lower, 
+		predictions.upper=m$predictions.upper,
 		cor.S=m$cor.S, 
 		cor.S.pv=m$cor.S.pv, 
 		cor.P=m$cor.P, 
@@ -77,6 +81,8 @@ setMethod(
 	{
 		cat( "Gene ID  :", object@gene.id, "\n" )
 		cat( "Mean Expr:", object@means, "\n" )
+		cat( "Q[10%]   :", object@predictions.lower, "\n" )
+		cat( "Q[90%]   :", object@predictions.upper, "\n" )
 		cat( "Var  Expr:", object@vars, "\n" )
 		cat( "Samples  :", object@no.samples, "\n" )
 		cat( "OOB      :", object@OOB, "\n" )
