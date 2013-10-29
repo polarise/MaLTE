@@ -81,8 +81,6 @@ setMethod(
 	{
 		cat( "Gene ID  :", object@gene.id, "\n" )
 		cat( "Mean Expr:", object@means, "\n" )
-		cat( "Q[10%]   :", object@predictions.lower, "\n" )
-		cat( "Q[90%]   :", object@predictions.upper, "\n" )
 		cat( "Var  Expr:", object@vars, "\n" )
 		cat( "Samples  :", object@no.samples, "\n" )
 		cat( "OOB      :", object@OOB, "\n" )

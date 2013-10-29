@@ -82,8 +82,14 @@ train.and.predict <-
 			# use the testing data
 			m.f <- object@probes.test
 			r.f <- object@hts.test
-			D.f <- data.frame( m.f )
-			colnames( D.f ) <- paste( "x", 1:object@no.probes, sep="" )
+			D.f <- data.frame( r.f, m.f )			
+			colnames( D.f ) <- c( "y", paste( "x", 1:object@no.probes, sep="" ))
+			
+			if ( feature.select & object@no.probes > min.probes )
+			{
+				D.f <- D.f[,order( cor.mat[1,], decreasing=T )[1:(min.probes+1)]] # retain only needed probes
+				D.f <- D.f[,2:ncol( D.f )]	# get rid of the response
+			}
 		
 			# predict the new response
 			if ( quantreg )
