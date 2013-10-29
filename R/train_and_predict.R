@@ -20,7 +20,7 @@ train.and.predict <-
 	quantreg <- params.object@quantreg
 	
 	# test whether there is data for training/testing
-	if ( is.na( object@probes.train ) || is.na( object@probes.test ) || mean( object@hts.train ) == 0.00 ) # ????
+	if ( is.na( object@probes.train ) || is.na( object@probes.test ) || mean( object@hts.train ) == 0.00 || length( unique( object@hts.train )) <= 4 ) # conditions for which to avoid training and predicting
 	{
 		m <- list(
 			gene.id=object@gene.id,
