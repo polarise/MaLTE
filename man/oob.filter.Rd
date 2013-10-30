@@ -32,6 +32,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -55,6 +56,7 @@ tt.seq.oob <- array2seq.oob( tt.ready, params.object )
 
 # filter by OOB at default threshold (thresh=0)
 tt.filtered <- oob.filter( tt.seq, tt.seq.oob )
+## End(Not run)
 }
 
 \keyword{filter}

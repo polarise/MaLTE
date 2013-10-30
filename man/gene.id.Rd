@@ -30,6 +30,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -49,6 +50,7 @@ tt.seq <- array2seq( tt.ready, tt.params )
 
 id <- gene.id( tt.seq[[1]] )
 ids <- as.vector( sapply( tt.seq, gene.id ))
+## End(Not run)
 }
 
 \keyword{gene}

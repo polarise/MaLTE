@@ -10,13 +10,13 @@ Performs training and prediction given an object of class \code{TT.Ready}.
 }
 
 \usage{
-run(object, params.object, OOB=FALSE)
+run(object, params.object, ...)
 }
 
 \arguments{
   \item{object}{an object of class \code{TT.Ready}}
   \item{params.object}{an object of class TT.Params that contains the parameters to be passed to the conditional random forest}
-  \item{OOB}{logical; if TRUE then use OOB using only the training data}
+  \item{...}{other parameters passed onto \code{train.and.predict}}
 }
 
 \value{
@@ -32,6 +32,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -49,6 +50,7 @@ tt.params <- TT.Params( )
 
 # OOB run
 prediction <- run( tt.ready[[1]], tt.params )
+## End(Not run)
 }
 
 \keyword{predict}

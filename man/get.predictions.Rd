@@ -35,6 +35,7 @@ May be run on both filtered and non-filtered tt.seq lists.
 }
 
 \examples{
+# Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -72,6 +73,7 @@ df.preds <- get.predictions( tt.seq, sample.names )
 
 # get the predicted expression estimates after OOB filtering
 df.preds.oob <- get.predictions( tt.filtered, sample.names )
+## End(Not run)
 }
 
 \keyword{predictions}

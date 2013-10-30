@@ -31,9 +31,11 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 sample.names <- get.test( samples.fn )
+## End(Not run)
 }
 
 \keyword{names}

@@ -30,6 +30,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -56,6 +57,7 @@ tt.seq.txs <- array2seq( tt.ready.txs, tt.params )
 
 id <- tx.id( tt.seq.txs[[1]] )
 ids <- lapply( tt.seq.txs, tx.id )
+## End(Not run)
 }
 
 \keyword{transcript}

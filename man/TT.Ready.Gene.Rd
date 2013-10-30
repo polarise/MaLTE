@@ -46,6 +46,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -58,6 +59,7 @@ prepare.data( samples.fn=samples.fn, ma.fn=ma.fn, hts.fn=hts.fn, g2p.fn=g2p.fn )
 
 # read in the training and test data
 tt.ready <- read.data( train.fn="train_data.txt.gz", test.fn="test_data.txt.gz" )
+## End(Not run)
 }
 
 \keyword{gene}

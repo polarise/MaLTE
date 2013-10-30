@@ -60,7 +60,9 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 showClass("TT.Ready.Tx")
+## End(Not run)
 }
 
 \keyword{classes}

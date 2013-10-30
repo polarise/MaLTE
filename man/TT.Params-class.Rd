@@ -23,6 +23,7 @@ Objects can be created by calls of the form \code{new("TT.Params", ...)}.
     \item{\code{cor.thresh}:}{Object of class \code{"numeric"} ~~ }
     \item{\code{OOB}:}{Object of class \code{"logical"} ~~ }
     \item{\code{quantreg}:}{Object of class \code{"logical"} ~~ }
+    \item{\code{tune.cor.P}:}{Object of class \code{"numericORlogical"} ~~ }
   }
 }
 \section{Methods}{
@@ -36,7 +37,9 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 showClass("TT.Params")
+## End(Not run)
 }
 
 \keyword{classes}

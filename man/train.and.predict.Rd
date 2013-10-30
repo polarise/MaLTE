@@ -10,12 +10,16 @@ Training is currently implemented using the conditional random forest algorithm 
 }
 
 \usage{
-train.and.predict(object, params.object)
+train.and.predict(object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE)
 }
 
 \arguments{
   \item{object}{an object of class \code{TT.Ready.Gene}}
-  \item{params.object}{an object of class \code{TT.Params}}
+  \item{params.object}{\code{NULL} or an object of class \code{TT.Params}}
+  \item{gene.tuned}{logical; if \code{TRUE} then tuned parameters for this gene will be determined}
+  \item{tune.quantreg}{logical; if \code{TRUE} then will use \code{quantregForest} instead of \code{cforest} random forest implementation}
+  \item{tune.verbose}{logical; if \code{TRUE} then will print tuning information; should not be used when running in parallel}
+  \item{OOB}{logical; if \code{TRUE} then will estimate out-of-bag values instead of using test data}
 }
 
 \value{
@@ -35,6 +39,7 @@ This function is used by \code{array2seq} expression prediction function.
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -55,6 +60,7 @@ a.gene <- train.and.predict( tt.ready[[1]], params.object )
 a.gene
 predictions( a.gene )
 sample.names <- get.names( samples.fn )
+## End(Not run)
 }
 
 \keyword{train}

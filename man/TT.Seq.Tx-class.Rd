@@ -71,7 +71,9 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 showClass("TT.Seq.Tx")
+## End(Not run)
 }
 
 \keyword{classes}

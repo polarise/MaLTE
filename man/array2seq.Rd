@@ -10,13 +10,13 @@ Takes a list of TT.Ready.Gene or TT.Ready.Tx objects and for each trains a condi
 }
 
 \usage{
-array2seq(tt.ready, params.object, OOB = FALSE)
+array2seq(tt.ready, params.object, ... )
 }
 
 \arguments{
   \item{tt.ready}{a list of TT.Ready.Gene or TT.Ready.Tx objects}
   \item{params.object}{an object of class TT.Params that contains the parameters to be passed to the conditional random forest}
-  \item{OOB}{logical; if TRUE then use OOB using only the training data}
+  \item{...}{other parameters passed onto \code{run}}
 }
 
 \value{
@@ -32,6 +32,7 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -49,6 +50,7 @@ params.object <- TT.Params()
 
 # predict
 tt.seq <- array2seq( tt.ready, params.object )
+## End(Not run)
 }
 
 \keyword{predict }

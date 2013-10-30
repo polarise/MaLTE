@@ -53,7 +53,9 @@ Paul K. Korir
 }
 
 \examples{
+## Not run:
 showClass("TT.Ready.Gene")
+## End(Not run)
 }
 
 \keyword{classes}
