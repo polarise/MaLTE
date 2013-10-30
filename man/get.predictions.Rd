@@ -35,7 +35,7 @@ May be run on both filtered and non-filtered tt.seq lists.
 }
 
 \examples{
-# Not run:
+\dontrun{
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )

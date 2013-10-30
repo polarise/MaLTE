@@ -17,6 +17,8 @@
 			model <- cforest( y ~ ., data=D, controls=cforest_control( mtry=mtry, ntree=ntree ) )
 			r.pred <- predict( model, OOB=TRUE )
 		}
+		
+		rm( model )
 	
 		# Pearson correlation between training and OOB predictions
 		cor.P <- cor.test( r, r.pred, method="pearson" )$estimate
@@ -40,6 +42,8 @@
 		model <- cforest( y ~ ., data=D, controls=cforest_control( mtry=mtry, ntree=ntree ) )
 		r.pred <- predict( model, OOB=TRUE )
 	}
+	
+	rm( model )
 
 	# Pearson correlation between training and OOB predictions
 	cor.P <- cor.test( r, r.pred, method="pearson" )$estimate
@@ -60,6 +64,8 @@
 		model <- cforest( y ~ ., data=D, controls=cforest_control( mtry=mtry, ntree=ntree ) )
 		r.pred <- predict( model, OOB=TRUE )
 	}
+	
+	rm( model )
 
 	# Pearson correlation between training and OOB predictions
 	cor.P <- cor.test( r, r.pred, method="pearson" )$estimate

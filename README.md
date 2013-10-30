@@ -8,6 +8,7 @@ News:
 - Incorporated gene-specific tuning; modified TT.Params to have a slot for the
 	tuned OOB Pearson correlation for comparison (without the p-value)
 - Fixed a bug that affected OOB filtering
+- Delete models immediately after tuning: does this save memory?
 
 0.2-4:
 - OOB filter for genes now takes into account significant p-values (<=0.05)
