@@ -8,8 +8,17 @@
 
 train.and.predict <-
 	function( object,
-					params.object )
+					params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE )
 {
+	if ( is.null( params.object ) & gene.tuned )
+	{
+		# gene-specific tuning
+		params.object <- tune( object, quantreg=tune.quantreg, verbose=tune.verbose, OOB=OOB )
+	} else if ( is.null( params.object ) & !gene.tuned )
+	{
+		stop( "Missing training parameters: either pass defaults (params.object=TT.Params) OR set gene.tuned=TRUE." )
+	}
+	
 	# get params
 	mtry <- params.object@mtry
 	ntree <- params.object@ntree
@@ -59,7 +68,7 @@ train.and.predict <-
 		cor.mat <- cor( D ) 					# correlation matrix
 		if ( feature.select & object@no.probes > min.probes ) # else use all features
 		{
-				D <- D[,order( cor.mat[1,], decreasing=T )[1:(min.probes+1)]]		# take the min.no most correlated
+				D <- D[,order( cor.mat[1,], decreasing=TRUE )[1:(min.probes+1)]]		# take the min.no most correlated
 		}
 		
 		# the model
@@ -93,7 +102,7 @@ train.and.predict <-
 			{
 				D.f <- data.frame( r.f, m.f )			
 				colnames( D.f ) <- c( "y", paste( "x", 1:object@no.probes, sep="" ))
-				D.f <- D.f[,order( cor.mat[1,], decreasing=T )[1:(min.probes+1)]] # retain only needed probes
+				D.f <- D.f[,order( cor.mat[1,], decreasing=TRUE )[1:(min.probes+1)]] # retain only needed probes
 				D.f <- D.f[,2:ncol( D.f )]		# get rid of the response
 			} else
 			{
@@ -116,7 +125,7 @@ train.and.predict <-
 		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ))
 		{
 			# Spearman correlation
-			cor_S <- cor.test( r.f, r.pred, method="spearman", continuity=T )
+			cor_S <- cor.test( r.f, r.pred, method="spearman", continuity=TRUE )
 			cor.S <- cor_S$estimate   # estimate
 			cor.S.pv <- cor_S$p.value	# p-value
 		
@@ -127,8 +136,8 @@ train.and.predict <-
 		}
 		
 		# mean & var
-		means <- mean( r.pred, na.rm=T )
-		vars <- var( r.pred, na.rm=T )
+		means <- mean( r.pred, na.rm=TRUE )
+		vars <- var( r.pred, na.rm=TRUE )
 		
 		if ( OOB | ( length( object@hts.test ) == object@no.test & length( object@hts.test ) > 2 ) )
 		{
@@ -207,7 +216,7 @@ train.and.predict.txs <-
 		cor.mat <- cor( D ) # correlation matrix
 		if ( feature.select & object@no.probes > min.probes & object@no.txs == 1 ) # else use all features
 		{
-				D <- D[,order( cor.mat[1,], decreasing=T )[1:( min.probes+1 )]]		# take the min.no most correlated
+				D <- D[,order( cor.mat[1,], decreasing=TRUE )[1:( min.probes+1 )]]		# take the min.no most correlated
 		}
 		
 		# the model
@@ -217,7 +226,7 @@ train.and.predict.txs <-
 		if ( OOB )
 		{
 			# estimate the prediction using OOB samples
-			r.pred.1 <- predict( model, OOB=T )
+			r.pred.1 <- predict( model, OOB=TRUE )
 			r.pred <- matrix( as.vector( unlist( r.pred.1 )), byrow=T, nrow=length( r.pred.1 ))
 			r.f <- object@hts.train
 		} else
@@ -245,8 +254,8 @@ train.and.predict.txs <-
 		}
 
 		# mean & var
-		means <- colMeans( r.pred, na.rm=T )
-		vars <- diag( var( r.pred, na.rm=T ))
+		means <- colMeans( r.pred, na.rm=TRUE )
+		vars <- diag( var( r.pred, na.rm=TRUE ))
 		
 		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 ))
 		{
