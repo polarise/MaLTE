@@ -1,3 +1,10 @@
+#-------------------------------------------------------------------------------
+#
+# Union of classes numeric and logical
+#
+#-------------------------------------------------------------------------------
+setClassUnion( "numericORlogical", c( "numeric", "logical" ))
+
 #
 # TT.Params Class
 #
@@ -10,14 +17,15 @@ setClass(
 		min.probes="numeric", 
 		cor.thresh="numeric", 
 		OOB="logical",
-		quantreg="logical" 
+		quantreg="logical",
+		tune.cor.P="numericORlogical"
 	)
 )
 
 #
 # TT.Params constructor
 #
-TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, cor.thresh=0, OOB=FALSE, quantreg=FALSE )
+TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, cor.thresh=0, OOB=FALSE, quantreg=FALSE, tune.cor.P=NA )
 {
 	# VALIDATION
 	# 1 <= mtry <= 10
@@ -37,7 +45,7 @@ TT.Params <- function( mtry=2, ntree=1000, feature.select=TRUE, min.probes=15, c
 		stop( "Invalid value for 'cor.thresh'. Should be between -1 and 1 inclusive." )
 	
 	# now it's safe to build the object
-	object <- new( "TT.Params", mtry=mtry, ntree=ntree, feature.select=feature.select, min.probes=min.probes, cor.thresh=cor.thresh, OOB=OOB, quantreg=quantreg )
+	object <- new( "TT.Params", mtry=mtry, ntree=ntree, feature.select=feature.select, min.probes=min.probes, cor.thresh=cor.thresh, OOB=OOB, quantreg=quantreg, tune.cor.P=tune.cor.P )
 	
 	return( object )
 }
@@ -50,12 +58,13 @@ setMethod(
 	signature( object="TT.Params" ), 
 	function( object )
 	{
-	cat( "mtry           =", object@mtry, "\n" )
-	cat( "ntree          =", object@ntree, "\n" )
-	cat( "feature.select =", object@feature.select, "\n" )
-	cat( "min.probes     =", object@min.probes, "\n" )
-	cat( "cor.thresh     =", object@cor.thresh, "\n" )
-	cat( "OOB            =", object@OOB, "\n" )
-	cat( "QuantReg       =", object@quantreg, "\n" )
+		cat( "mtry             =", object@mtry, "\n" )
+		cat( "ntree            =", object@ntree, "\n" )
+		cat( "feature.select   =", object@feature.select, "\n" )
+		cat( "min.probes       =", object@min.probes, "\n" )
+		cat( "cor.thresh       =", object@cor.thresh, "\n" )
+		cat( "OOB              =", object@OOB, "\n" )
+		cat( "QuantReg         =", object@quantreg, "\n" )
+		cat( "Tune (OOB cor.P) =", object@tune.cor.P, "\n" )
 	}
 )
