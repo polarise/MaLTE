@@ -68,9 +68,9 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 showClass("TT.Seq.Gene")
-## End(Not run)
+}
 }
 
 \keyword{classes}

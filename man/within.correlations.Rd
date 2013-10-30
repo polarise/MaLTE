@@ -45,10 +45,10 @@ available.
 }
 
 \examples{
-## Not run:
+\dontrun{
 # location of example input files
 # to be added...
-## End(Not run)
+}
 }
 
 \keyword{within}

@@ -20,9 +20,9 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 showClass("numericORlogical")
-## End(Not run)
+}
 }
 
 \keyword{classes}

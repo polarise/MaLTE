@@ -38,7 +38,7 @@ This script calls an underlying Python script. For this reason, MaLTE presently 
 }
 
 \examples{
-## Not run:
+\dontrun{
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -47,7 +47,7 @@ g2p.fn <- paste( system.file( package="MaLTE" ), "data", "gene_probesets.txt.gz"
 
 # prepare training and test data
 prepare.data( samples.fn=samples.fn, ma.fn=ma.fn, hts.fn=hts.fn, g2p.fn=g2p.fn )
-## End(Not run)
+}
 }
 
 \keyword{prepare}

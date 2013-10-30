@@ -37,9 +37,9 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 showClass("TT.Params")
-## End(Not run)
+}
 }
 
 \keyword{classes}

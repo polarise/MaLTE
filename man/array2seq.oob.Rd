@@ -32,7 +32,7 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -53,7 +53,7 @@ tt.seq <- array2seq( tt.ready, params.object )
 
 # perform OOB predictions
 tt.seq.oob <- array2seq.oob( tt.ready, params.object )
-## End(Not run)
+}
 }
 
 \keyword{predict}

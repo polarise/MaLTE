@@ -33,7 +33,7 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -48,7 +48,7 @@ tt.ready <- read.data( train.fn="train_data.txt.gz", test.fn="test_data.txt.gz" 
 
 # get tuned parameters for each gene (ad hoc)
 tt.gene.params <- lapply( tt.ready, tune )
-## End(Not run)
+}
 }
 
 \keyword{predict }

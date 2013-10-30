@@ -60,9 +60,9 @@ Paul K. Korir
 }
 
 \examples{
-## Not run:
+\dontrun{
 showClass("TT.Ready.Tx")
-## End(Not run)
+}
 }
 
 \keyword{classes}

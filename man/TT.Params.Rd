@@ -31,10 +31,10 @@ TT.Params(mtry = 2, ntree = 1000, feature.select = TRUE, min.probes = 15, cor.th
 }
 
 \examples{
-## Not run:
+\dontrun{
 # create a TT.Params object using default parameters
 tt.params <- TT.Params()
-## End(Not run)
+}
 }
 
 \keyword{ ~params }

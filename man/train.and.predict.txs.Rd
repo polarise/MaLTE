@@ -35,7 +35,7 @@ This function is used by \code{array2seq} expression prediction function.
 }
 
 \examples{
-## Not run:
+\dontrun{
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 ma.fn <- paste( system.file( package="MaLTE" ), "data", "ma_data.txt.gz", sep="/" )
@@ -62,7 +62,7 @@ a.txs <- train.and.predict.txs( tt.ready.txs[[1]], params.object )
 a.txs
 predictions( a.txs )
 sample.names <- get.names( samples.fn )
-## End(Not run)
+}
 }
 
 \keyword{train}

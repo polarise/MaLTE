@@ -35,7 +35,7 @@ Paul K. Korir
 # location of example input files
 samples.fn <- paste( system.file( package="MaLTE" ), "data", "samples.txt.gz", sep="/" )
 sample.names <- get.names( samples.fn )
-## End(Not run)
+}
 }
 
 \keyword{names}

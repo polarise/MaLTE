@@ -73,7 +73,7 @@ df.preds <- get.predictions( tt.seq, sample.names )
 
 # get the predicted expression estimates after OOB filtering
 df.preds.oob <- get.predictions( tt.filtered, sample.names )
-## End(Not run)
+}
 }
 
 \keyword{predictions}
