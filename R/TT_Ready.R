@@ -209,6 +209,8 @@ setMethod( "show.probes.test", signature( object="TT.Ready.Tx" ), function( obje
 # run()
 setMethod( "run", signature( object="TT.Ready.Tx" ), function( object, params.object, OOB=FALSE )
 	{
+		if ( is.null( params.object ))
+			stop( "params.object must be set when predicting transcript isoform expression; re-run with params.object=TT.Params()" )
 		if ( OOB )
 			params.object@OOB <- OOB
 		tt.seq.txs <- train.and.predict.txs( object, params.object )
@@ -220,6 +222,8 @@ setMethod( "run", signature( object="TT.Ready.Tx" ), function( object, params.ob
 # alias to run( TT.Ready.Tx, OOB=TRUE )
 setMethod( "oob.run", signature( object="TT.Ready.Tx" ), function( object, params.object )
 	{
+		if ( is.null( params.object ))
+			stop( "params.object must be set when predicting transcript isoform expression; re-run with params.object=TT.Params()" )
 		params.object@OOB <- TRUE
 		tt.seq.oob.txs <- train.and.predict.txs( object, params.object )
 		return( tt.seq.oob.txs )
