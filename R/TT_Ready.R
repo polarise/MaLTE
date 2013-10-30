@@ -104,7 +104,7 @@ setMethod( "show.probes.test", signature( object="TT.Ready.Gene" ), function( ob
 #setMethod( "summary", ... )
 
 # run()
-setGeneric( "run", function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE ) standardGeneric( "run" ) )
+setGeneric( "run", function( object, params.object, ... ) standardGeneric( "run" ) )
 setMethod( "run", signature( object="TT.Ready.Gene" ), function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE )
 	{
 		if ( !is.null( params.object) & OOB )
@@ -116,7 +116,7 @@ setMethod( "run", signature( object="TT.Ready.Gene" ), function( object, params.
 
 # oob.run()
 # alias to run( TT.Ready.Gene, OOB=TRUE )
-setGeneric( "oob.run", function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE ) standardGeneric( "oob.run" ) )
+setGeneric( "oob.run", function( object, params.object, ... ) standardGeneric( "oob.run" ) )
 setMethod( "oob.run", signature( object="TT.Ready.Gene" ), function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE )
 	{
 		if ( !is.null( params.object ))
