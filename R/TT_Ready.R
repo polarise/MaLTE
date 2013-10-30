@@ -105,9 +105,9 @@ setMethod( "show.probes.test", signature( object="TT.Ready.Gene" ), function( ob
 
 # run()
 setGeneric( "run", function( object, params.object, ... ) standardGeneric( "run" ) )
-setMethod( "run", signature( object="TT.Ready.Gene" ), function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE )
+setMethod( "run", signature( object="TT.Ready.Gene" ), function( object, params.object, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE, OOB=FALSE )
 	{
-		if ( !is.null( params.object) & OOB )
+		if ( !is.null( params.object ) & OOB )
 			params.object@OOB <- OOB
 		tt.seq <- train.and.predict( object, params.object=params.object, gene.tuned=gene.tuned, tune.quantreg=tune.quantreg, tune.verbose=tune.verbose, OOB=OOB )
 		return( tt.seq )	
@@ -117,7 +117,7 @@ setMethod( "run", signature( object="TT.Ready.Gene" ), function( object, params.
 # oob.run()
 # alias to run( TT.Ready.Gene, OOB=TRUE )
 setGeneric( "oob.run", function( object, params.object, ... ) standardGeneric( "oob.run" ) )
-setMethod( "oob.run", signature( object="TT.Ready.Gene" ), function( object, params.object=NULL, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE )
+setMethod( "oob.run", signature( object="TT.Ready.Gene" ), function( object, params.object, gene.tuned=TRUE, tune.quantreg=FALSE, tune.verbose=FALSE )
 	{
 		if ( !is.null( params.object ))
 			params.object@OOB <- TRUE
