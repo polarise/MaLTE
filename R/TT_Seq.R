@@ -105,6 +105,36 @@ setMethod(
 	}
 )
 
+setGeneric(
+	name="lower",
+	function( object )
+		standardGeneric( "lower" )
+)
+setMethod(
+	f="lower",
+	signature( object="TT.Seq.Gene" ),
+	function( object )
+	{
+		lows <- object@predictions.lower
+		return( lows )
+	}
+)
+
+setGeneric(
+	name="upper",
+	function( object )
+		standardGeneric( "upper" )
+)
+setMethod(
+	f="upper",
+	signature( object="TT.Seq.Gene" ),
+	function( object )
+	{
+		ups <- object@predictions.upper
+		return( ups )
+	}
+)
+
 # trues()
 setGeneric(
 	name="trues",

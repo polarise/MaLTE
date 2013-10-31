@@ -2,13 +2,22 @@ MaLTE
 =====
 Machine Learning of Transcript Expression
 
+TODO:
+- in per-gene-tuning, add tuning parameters to results in TT.Seq.Gene objects
+- leave-N-out cross-validation
+- direct comparison to median-polish et al. (DONE)
+- add ComBat stuff (NOPE)
+- make prepare_data parallel (DONE)
+
 News:
 0.2-5: EXPERIMENTAL (forked as 'quantreg' branch)
 - Incorporated quantregForest for interval estimation of predictions
 - Incorporated gene-specific tuning; modified TT.Params to have a slot for the
 	tuned OOB Pearson correlation for comparison (without the p-value)
 - Fixed a bug that affected OOB filtering
-- Delete models immediately after tuning: does this save memory?
+- Delete models immediately after tuning: does this save memory? (Naa...)
+- Added accessor functions to get lower and upper prediction intervals when
+	using quantreg=TRUE
 
 0.2-4:
 - OOB filter for genes now takes into account significant p-values (<=0.05)
@@ -76,8 +85,6 @@ News:
 05-08-2013
 - major fixes to documentation except documenting datasets
 
-
-
 Checklist:
 - 80 characters
 - comments
@@ -93,11 +100,6 @@ Checklist:
 - add keywords in the documentation (DONE)
 - replace 'T' with 'TRUE' (DONE)
 
-Feature list:
-- leave-one-out cross-validation
-- direct comparison to median-polish et al. (DONE)
-- add ComBat stuff
-- make prepare_data parallel (DONE)
 
 
 - Later: provide a graphical description of which the best-performing probes are

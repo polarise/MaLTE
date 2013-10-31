@@ -4,6 +4,8 @@
 \alias{TT.Seq.Gene-class}
 \alias{gene.id,TT.Seq.Gene-method}
 \alias{predictions,TT.Seq.Gene-method}
+\alias{lower,TT.Seq.Gene-method}
+\alias{upper,TT.Seq.Gene-method}
 \alias{trues,TT.Seq.Gene-method}
 \alias{show,TT.Seq.Gene-method}
 \alias{cor.P,TT.Seq.Gene-method}
@@ -12,7 +14,10 @@
 \title{Class \code{"TT.Seq.Gene"}}
 
 \description{
-Class for objects that hold results of gene expression prediction. The train.and.predict or run functions return items of this class. The filter function also takes two such objects. The get.predictions function and gene.id and predictions methods take such objects.
+Class for objects that hold results of gene expression prediction. The 
+\code{train.and.predict} or run functions return items of this class. 
+The filter function also takes two such objects. The get.predictions function 
+and gene.id and predictions methods take such objects.
 }
 
 \section{Objects from the Class}{
@@ -47,6 +52,10 @@ Class \code{"\linkS4class{TT.Seq}"}, directly.
     for gene identifier. }
     \item{predictions}{\code{signature(object = "TT.Seq.Gene")}: Accessor 
     function for predicted expression. }
+    \item{lower}{\code{signature(object = "TT.Seq.Gene")}: Accessor
+    function for prediction interval lower bound. }
+    \item{upper}{\code{signature(object = "TT.Seq.Gene")}: Accessor
+    function for prediction interval upper bound. }
     \item{trues}{\code{signature(object = "TT.Seq.Gene")}: Accessor function for
      true expression. }
     \item{show}{\code{signature(object = "TT.Seq.Gene")}: Shows the gene ID, 
