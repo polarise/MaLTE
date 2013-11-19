@@ -55,7 +55,7 @@ oob.filter <- function( list.objects, list.objects.oob, thresh=0 )
 		trues.present <- all( !is.na( list.objects[[1]]@trues ))
 		
 		# subset
-		tt.filtered1 <- mapply( .subsetter, list.objects, cor.P.oob, trues.present=trues.present, SIMPLIFY=F )
+		tt.filtered1 <- mapply( .subsetter, list.objects, cor.P.oob, trues.present=trues.present, SIMPLIFY=FALSE )
 		
 		# TRUE - retain; FALSE - exclude
 		tt.filtered2 <- as.vector( sapply( tt.filtered1, function( m )

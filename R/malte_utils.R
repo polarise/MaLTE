@@ -38,7 +38,7 @@
 		
 		# affy correlations
 		affy.cor.P <- cor.test( affy, trues )$estimate
-		affy.cor.S <- cor.test( affy, trues, me="sp" )$estimate
+		affy.cor.S <- cor.test( affy, trues, method="spearman" )$estimate
 	}
 	
 	list( genes=gene, affy.cor.S=affy.cor.S, affy.cor.P=affy.cor.P, cor.S=cor.S, cor.P=cor.P )
@@ -162,11 +162,11 @@ within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", che
 	
 		# compute respective correlations for MaLTE
 		cor.P <- as.vector( cor.test( samp.trues, samp.preds )$estimate )
-		cor.S <- as.vector( cor.test( samp.trues, samp.preds, me="sp" )$estimate )
+		cor.S <- as.vector( cor.test( samp.trues, samp.preds, method="spearman" )$estimate )
 	
 		# compute respective correlations for summarisation
 		affy.cor.P <- as.vector( cor.test( affy.trues, affy.preds )$estimate )
-		affy.cor.S <- as.vector( cor.test( affy.trues, affy.preds, me="sp" )$estimate )
+		affy.cor.S <- as.vector( cor.test( affy.trues, affy.preds, method="spearman" )$estimate )
 	
 		# append correlations to the data frame for MaLTE
 		within.cors.P <- c( within.cors.P, cor.P )
