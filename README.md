@@ -10,6 +10,11 @@ TODO:
 - make prepare_data parallel (DONE)
 
 News:
+0.3-0: EXPERIMENTAL (forked as 'princomp' branch)
+- Augmented samples.txt to now include principal components
+
+0.2-5: FINAL (merged 'quantreg' to 'master')
+
 0.2-5: EXPERIMENTAL (forked as 'quantreg' branch)
 - Incorporated quantregForest for interval estimation of predictions
 - Incorporated gene-specific tuning; modified TT.Params to have a slot for the

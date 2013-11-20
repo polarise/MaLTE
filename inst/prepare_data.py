@@ -100,7 +100,7 @@ def get_data( f_fn, g_fn, ma_L, platform="ma", column=1 ):
 	
 	return
 
-def get_sample_names( f ):
+def get_sample_names( f, extract_PCs=False ):
 	"""
 	process the file 'samples.txt' to extract sample names
 	"""
@@ -109,24 +109,38 @@ def get_sample_names( f ):
 	train_ma_L = list()
 	test_ma_L = list()
 	
+	if extract_PCs:
+		train_PCs = open( "train_PCs.txt", 'w' )
+		test_PCs = open( "test_PCs.txt", 'w' )
+	
 	# file should have two columns
 	row_count = 0
 	for row in f:
 		L = row.strip().split( '\t' )
 		if row[0] == 'h' and row_count == 0: # skip the header
 			row_count += 1
+			if len( L ) > 2:
+				PCs_present = True 
+			else:
+				PCs_present = False
 			continue
 		elif row[0] != 'h' and row_count == 0:
 			print >> sys.stderr, "Error: missing header in sample names file. Please add a header 'hts<tab>ma'."
 			sys.exit( 1 )
 		if L[0] == "*NA":
 			test_ma_L += [L[1]]
+			if PCs_present and extract_PCs:	
+				print >> test_PCs, "\t".join( L[2:] )
 		elif L[0][0] == '*':
 			test_hts_L += [L[0].lstrip( '*' )]
 			test_ma_L += [L[1]]
+			if PCs_present and extract_PCs:
+				print >> test_PCs, "\t".join( L[2:] )
 		else:
 			train_hts_L += [L[0]]
 			train_ma_L += [L[1]]
+			if PCs_present and extract_PCs:
+				print >> train_PCs, "\t".join( L[2:] )
 		row_count += 1
 	
 	return train_hts_L, test_hts_L, train_ma_L, test_ma_L
@@ -263,6 +277,7 @@ if __name__ == '__main__':
 	parser.add_argument( '-m', "--ma-data", default="ma_data.txt", help="the name of the file containing a matrix of microarray probe intensities [default: ma_data.txt]" )
 	parser.add_argument( '-g', "--gene-probesets", default="gene_probesets.txt", help="the name of the file containig the map of gene names to probeset names [default: gene_probesets.txt]" )
 	parser.add_argument( '-r', "--raw", action='store_true', default=False, help="should you used output directly from APT apt-cel-extract? [default: False]" )
+	parser.add_argument( '-p', "--principal-components", default="False", help="should you extract principal components? (if present: see documentation on this) [defaultt: False]" )
 	
 	# if no args given
 	if len( sys.argv ) == 1:
@@ -276,6 +291,7 @@ if __name__ == '__main__':
 	hts_fn = args.hts_data
 	g2ps_fn = args.gene_probesets
 	raw = args.raw
+	extract_PCs = args.principal_components
 	
 	# check if the files exist and has proper name
 	if os.path.exists( id_fn ):
@@ -336,10 +352,12 @@ if __name__ == '__main__':
 		f = gzip.open( id_fn )
 	elif re.search( r"txt$", id_fn ):
 		f = open( id_fn )
-	train_hts_L, test_hts_L, train_ma_L, test_ma_L = get_sample_names( f )
+	train_hts_L, test_hts_L, train_ma_L, test_ma_L = get_sample_names( f, extract_PCs )
 	f.close()
 	print >> sys.stderr, "OK"
 	print >> sys.stderr, "No. of samples: HTS (train/test); microarray (train/test)... (%s/%s) vs. (%s/%s)" % ( len( train_hts_L ), len( test_hts_L ), len( train_ma_L ), len( test_ma_L ) )
+	if extract_PCs:
+		print >> sys.stderr, "Extracted principal components present to files 'train_PCs.txt' and 'test_PCs.txt'."
 	
 	# get map of genes to ps
 	print >> sys.stderr, "Creating a map of genes to probe sets from '%s'..." % g2ps_fn,

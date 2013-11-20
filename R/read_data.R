@@ -1,7 +1,7 @@
 #
 # create a list of TT.Ready.Gene objects
 #
-.numerise <- function( m )	# function to make all variables into numbers
+.numerise <- function( m, PCs.present=FALSE, train.PCs=NULL, test.PCs=NULL )	# function to make all variables into numbers
 {
 	if ( is.na( m$hts.test ) )
 	{
@@ -18,8 +18,15 @@
 	   probes.test <- NA
 	} else
 	{
-		probes.train <- matrix( as.vector( unlist( lapply( strsplit( m$probes.train, "," ), as.numeric ))), nrow=m$no.train )
-		probes.test <- matrix( as.vector( unlist( lapply( strsplit( m$probes.test, "," ), as.numeric ))), nrow=m$no.test )
+		if ( PCs.present )
+		{
+			probes.train <- cbind( train.PCs, matrix( as.vector( unlist( lapply( strsplit( m$probes.train, "," ), as.numeric ))), nrow=m$no.train ))
+			probes.test <- cbind( test.PCs, matrix( as.vector( unlist( lapply( strsplit( m$probes.test, "," ), as.numeric ))), nrow=m$no.test ))
+		} else
+		{
+			probes.train <- matrix( as.vector( unlist( lapply( strsplit( m$probes.train, "," ), as.numeric ))), nrow=m$no.train )
+			probes.test <- matrix( as.vector( unlist( lapply( strsplit( m$probes.test, "," ), as.numeric ))), nrow=m$no.test )
+		}
 	}
 	
 	m.list <- list( gene.id=m$gene.id, no.train=m$no.train, no.test=m$no.test, no.probes=m$no.probes, hts.train=hts.train, hts.test=hts.test, probes.train=probes.train, probes.test=probes.test )
@@ -65,13 +72,25 @@
 #
 # genes
 #
-read.data <- function( train.fn, test.fn )
+read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn=NULL, test.PCs.fn=NULL )
 {
-	cat( "Reading training data from '", train.fn, "'\n" )
-	train.data <- read.table( train.fn, stringsAsFactors=F )
+	cat( "Reading training data from '", train.fn, "'\n", sep="" )
+	train.data <- read.table( train.fn, stringsAsFactors=FALSE )
 	
 	cat( "Reading testing data from '", test.fn, "'\n" )
-	test.data <- read.table( test.fn, stringsAsFactors=F )
+	test.data <- read.table( test.fn, stringsAsFactors=FALSE, sep="" )
+	
+	if ( PCs.present )
+	{
+		if ( !is.null( train.PCs.fn ) | !is.null( test.PCs.fn ) )
+			stop( "PCs.present=TRUE but file(s) of PCs are missing. Retry.\n" )
+		
+		cat( "Obtaining principal components of probe intensities...\n" )
+		dummy <- read.table( train.PCs.fn, header=FALSE )
+		train.PCs <- matrix( unlist( dummy ), dim( dummy ))
+		dummy <- read.table( test.PCs.fn, header=FALSE )
+		test.PCs <- matrix( unlist( dummy ), dim( dummy ))
+	}	
 	
 	tt <- cbind( train.data[,c(1,2,3,5,6)], test.data[,c(2,5,6)] )
 	colnames( tt ) <- c( "gene.id", "no.train", "no.probes", "hts.train", "probes.train", "no.test", "hts.test", "probes.test" )
@@ -79,7 +98,7 @@ read.data <- function( train.fn, test.fn )
 	# perform the following in parallel
 	cat( "Creating list of objects ready for prediction...\n" )
 	tt.data <- mclapply( split(tt, 1:nrow(tt)), as.list )	# convert the data.frame to a list of lists
-	tt.ready <- mclapply( tt.data, .numerise )								# convert strings to vectors of numbers
+	tt.ready <- mclapply( tt.data, .numerise, PCs.present, train.PCs, test.PCs )								# convert strings to vectors of numbers
 
 	return( tt.ready )
 }
@@ -89,11 +108,11 @@ read.data <- function( train.fn, test.fn )
 #
 read.txs.data <- function( train.fn, test.fn )
 {
-	cat( "Reading training data from '", train.fn, "'\n" )
-	train.data <- read.table( train.fn, stringsAsFactors=F )
+	cat( "Reading training data from '", train.fn, "'\n", sep="" )
+	train.data <- read.table( train.fn, stringsAsFactors=FALSE )
 	
-	cat( "Reading testing data from '", test.fn, "'\n" )
-	test.data <- read.table( test.fn, stringsAsFactors=F )
+	cat( "Reading testing data from '", test.fn, "'\n", sep="" )
+	test.data <- read.table( test.fn, stringsAsFactors=FALSE )
 	
 	tt <- cbind( train.data[,c(1,2,3,4,5,7,8)], test.data[,c(4,7,8)] )
 	colnames( tt ) <- c( "gene.id", "tx.id", "no.txs", "no.train", "no.probes", "hts.train", "probes.train", "no.test", "hts.test", "probes.test" )

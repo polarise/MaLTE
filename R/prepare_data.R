@@ -28,6 +28,6 @@ prepare.txs.data <- function( samples.fn="samples.txt", train.fn="train_data.txt
   if ( length( status ) == 0 )
 		cat( "Successfully prepared transcript-level training and test data.\n" )
 	else
-		cat( "There was a problem running prepare.data(). Please check the error above and retry.\n" )
+		cat( "There was a problem running prepare.txs.data(). Please check the error above and retry.\n" )
 }
 

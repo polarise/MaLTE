@@ -1,7 +1,7 @@
 Package: MaLTE
 Type: Package
 Title: Machine Learning of Transcript Expression (MaLTE)
-Version: 0.2-5
+Version: 0.3-0
 Date: 2013-05-13
 Author: Paul K. Korir
 Maintainer: Paul K. Korir <paul.korir@gmail.com>
