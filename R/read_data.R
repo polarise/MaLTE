@@ -77,8 +77,8 @@ read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn="train
 	cat( "Reading training data from '", train.fn, "'\n", sep="" )
 	train.data <- read.table( train.fn, stringsAsFactors=FALSE )
 	
-	cat( "Reading testing data from '", test.fn, "'\n" )
-	test.data <- read.table( test.fn, stringsAsFactors=FALSE, sep="" )
+	cat( "Reading testing data from '", test.fn, "'\n", sep=""  )
+	test.data <- read.table( test.fn, stringsAsFactors=FALSE)
 	
 	if ( PCs.present )
 	{

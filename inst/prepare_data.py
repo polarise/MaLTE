@@ -277,7 +277,7 @@ if __name__ == '__main__':
 	parser.add_argument( '-m', "--ma-data", default="ma_data.txt", help="the name of the file containing a matrix of microarray probe intensities [default: ma_data.txt]" )
 	parser.add_argument( '-g', "--gene-probesets", default="gene_probesets.txt", help="the name of the file containig the map of gene names to probeset names [default: gene_probesets.txt]" )
 	parser.add_argument( '-r', "--raw", action='store_true', default=False, help="should you used output directly from APT apt-cel-extract? [default: False]" )
-	parser.add_argument( '-p', "--principal-components", default=False, help="should you extract principal components? (if present: see documentation on this) [defaultt: False]" )
+	parser.add_argument( '-p', "--principal-components", action='store_true', default=False, help="should you extract principal components? (if present: see documentation on this) [defaultt: False]" )
 	
 	# if no args given
 	if len( sys.argv ) == 1:
@@ -369,6 +369,7 @@ if __name__ == '__main__':
 	f.close()
 	print >> sys.stderr, "OK"
 
+	print >> sys.stderr, "Creating temporary training and test data for HTS and microarray...",
 #	# create the training probe data
 	p1 = multiprocessing.Process( target=get_data, args=( ma_fn, "temp/train_ma", train_ma_L ), kwargs={ "platform": "ma", "column": column } )
 	p1.start()
@@ -383,13 +384,14 @@ if __name__ == '__main__':
 	# create the test hts data
 	p4 = multiprocessing.Process( target=get_data, args=( hts_fn, "temp/test_hts", test_hts_L ), kwargs={ "platform": "hts" } )
 	p4.start()
-
+	
 	# wait until you're done
 	p1.join()
 	p2.join()
 	p3.join()
 	p4.join()
 	
+	print >> sys.stderr, "OK"
 #	sys.exit( 1 )
 	
 	print >> sys.stderr, "Extracted microarray and HTS data"
