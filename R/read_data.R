@@ -72,7 +72,7 @@
 #
 # genes
 #
-read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn=NULL, test.PCs.fn=NULL )
+read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn="train_PCs.txt", test.PCs.fn="test_PCs.txt" )
 {
 	cat( "Reading training data from '", train.fn, "'\n", sep="" )
 	train.data <- read.table( train.fn, stringsAsFactors=FALSE )

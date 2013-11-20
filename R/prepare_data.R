@@ -1,11 +1,16 @@
-prepare.data <- function( samples.fn="samples.txt", ma.fn="ma_data.txt", hts.fn="hts_data.txt", g2p.fn="gene_probesets.txt", raw=FALSE )
+prepare.data <- function( samples.fn="samples.txt", ma.fn="ma_data.txt", hts.fn="hts_data.txt", g2p.fn="gene_probesets.txt", raw=FALSE, PCs=FALSE )
 {
 	py.options <- paste( "-s", samples.fn, "-m", ma.fn, "-t", hts.fn, "-g", g2p.fn, sep=" " )
 
 	if ( raw )
 	{
 		py.options <- paste( py.options, "-r", sep=" " )
-	}	
+	}
+	
+	if ( PCs )
+	{
+		py.options <- paste( py.options, "-p", sep=" " )
+	}
 	
 	path <- paste( system.file( package="MaLTE" ), "prepare_data.py", sep="/" )
 	cmd <- paste( "python", path, py.options, sep=" " )

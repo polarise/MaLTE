@@ -10,7 +10,7 @@ Runs a Python script to combine the microarray and high-throughput-sequencing (H
 }
 
 \usage{
-prepare.data(samples.fn = "samples.txt", ma.fn = "ma_data.txt", hts.fn = "hts_data.txt", g2p.fn = "gene_probesets.txt", raw = FALSE)
+prepare.data(samples.fn = "samples.txt", ma.fn = "ma_data.txt", hts.fn = "hts_data.txt", g2p.fn = "gene_probesets.txt", raw = FALSE, PCs=FALSE)
 }
 
 \arguments{
@@ -19,6 +19,7 @@ prepare.data(samples.fn = "samples.txt", ma.fn = "ma_data.txt", hts.fn = "hts_da
   \item{hts.fn}{the name of the file containing HTS (RNA-Seq) gene expression estimates}
   \item{g2p.fn}{the map of genes to probe sets; a probe set typically consists of about four probes}
   \item{raw}{logical; if TRUE treat the microarray probe intensities as the raw output from Affymetrix Power Tools; this implies different column positions for the probe and probe set identifiers}
+  \item{PCs}{logical; are principal components present in the \code{samples.txt} file?}
 }
 
 \value{

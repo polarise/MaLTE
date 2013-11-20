@@ -277,7 +277,7 @@ if __name__ == '__main__':
 	parser.add_argument( '-m', "--ma-data", default="ma_data.txt", help="the name of the file containing a matrix of microarray probe intensities [default: ma_data.txt]" )
 	parser.add_argument( '-g', "--gene-probesets", default="gene_probesets.txt", help="the name of the file containig the map of gene names to probeset names [default: gene_probesets.txt]" )
 	parser.add_argument( '-r', "--raw", action='store_true', default=False, help="should you used output directly from APT apt-cel-extract? [default: False]" )
-	parser.add_argument( '-p', "--principal-components", default="False", help="should you extract principal components? (if present: see documentation on this) [defaultt: False]" )
+	parser.add_argument( '-p', "--principal-components", default=False, help="should you extract principal components? (if present: see documentation on this) [defaultt: False]" )
 	
 	# if no args given
 	if len( sys.argv ) == 1:
