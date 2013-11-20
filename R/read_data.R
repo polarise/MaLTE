@@ -72,7 +72,7 @@
 #
 # genes
 #
-read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn="train_PCs.txt", test.PCs.fn="test_PCs.txt" )
+read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn=NULL, test.PCs.fn=NULL )
 {
 	cat( "Reading training data from '", train.fn, "'\n", sep="" )
 	train.data <- read.table( train.fn, stringsAsFactors=FALSE )
@@ -82,7 +82,7 @@ read.data <- function( train.fn, test.fn, PCs.present=FALSE, train.PCs.fn="train
 	
 	if ( PCs.present )
 	{
-		if ( !is.null( train.PCs.fn ) | !is.null( test.PCs.fn ) )
+		if ( is.null( train.PCs.fn ) | is.null( test.PCs.fn ) )
 			stop( "PCs.present=TRUE but file(s) of PCs are missing. Retry.\n" )
 		
 		cat( "Obtaining principal components of probe intensities...\n" )
