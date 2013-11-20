@@ -10,7 +10,7 @@ TODO:
 - make prepare_data parallel (DONE)
 
 News:
-0.3-0: EXPERIMENTAL (forked as 'princomp' branch)
+0.3-0: EXPERIMENTAL (forked as 'princomps' branch)
 - Augmented samples.txt to now include principal components
 
 0.2-5: FINAL (merged 'quantreg' to 'master')
