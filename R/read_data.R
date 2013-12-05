@@ -22,14 +22,16 @@
 		{
 			probes.train <- cbind( train.PCs, matrix( as.vector( unlist( lapply( strsplit( m$probes.train, "," ), as.numeric ))), nrow=m$no.train ))
 			probes.test <- cbind( test.PCs, matrix( as.vector( unlist( lapply( strsplit( m$probes.test, "," ), as.numeric ))), nrow=m$no.test ))
+			no.pcs <- ncol( train.PCs )
 		} else
 		{
 			probes.train <- matrix( as.vector( unlist( lapply( strsplit( m$probes.train, "," ), as.numeric ))), nrow=m$no.train )
 			probes.test <- matrix( as.vector( unlist( lapply( strsplit( m$probes.test, "," ), as.numeric ))), nrow=m$no.test )
+			no.pcs <- 0
 		}
 	}
 	
-	m.list <- list( gene.id=m$gene.id, no.train=m$no.train, no.test=m$no.test, no.probes=m$no.probes, hts.train=hts.train, hts.test=hts.test, probes.train=probes.train, probes.test=probes.test )
+	m.list <- list( gene.id=m$gene.id, no.train=m$no.train, no.test=m$no.test, no.probes=m$no.probes+no.pcs, hts.train=hts.train, hts.test=hts.test, probes.train=probes.train, probes.test=probes.test )
 	
 	m.obj <- TT.Ready.Gene( m.list )
 	

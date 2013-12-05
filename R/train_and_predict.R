@@ -242,7 +242,7 @@ train.and.predict.txs <-
 		}
 		
 
-		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 ))
+		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 & !all( is.na( object@hts.test )) ))
 		{
 			# Spearman correlation
 			cor.S <- diag( cor( r.f, r.pred, method="spearman" ))
@@ -257,7 +257,7 @@ train.and.predict.txs <-
 		means <- colMeans( r.pred, na.rm=TRUE )
 		vars <- diag( var( r.pred, na.rm=TRUE ))
 		
-		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 ))
+		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 & !all( is.na( object@hts.test )) ))
 		{
 			m <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
 		} else
