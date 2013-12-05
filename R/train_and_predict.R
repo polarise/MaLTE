@@ -200,7 +200,7 @@ train.and.predict.txs <-
 		
 		m.obj <- TT.Seq.Tx( m )
 		
-		return( m.obj )	
+		return( m.obj )
 	} else
 	{
 		# structure the data
@@ -216,12 +216,12 @@ train.and.predict.txs <-
 		cor.mat <- cor( D ) # correlation matrix
 		if ( feature.select & object@no.probes > min.probes & object@no.txs == 1 ) # else use all features
 		{
-				D <- D[,order( cor.mat[1,], decreasing=TRUE )[1:( min.probes+1 )]]		# take the min.no most correlated
+				D <- D[,order( cor.mat[1,], decreasing=TRUE )[1:( min.probes+1 )]] # take the min.no most correlated
 		}
 		
 		# the model
 		model.text <- parse( text=paste( "cforest(", paste( paste( ys, collapse="+" ), sep="" ), "~ ., data=D, controls=cforest_control( ntree=ntree, mincriterion=0.95, mtry=mtry ))", sep="" ))
-		model <- eval( model.text )	
+		model <- eval( model.text )
 				
 		if ( OOB )
 		{
@@ -241,8 +241,14 @@ train.and.predict.txs <-
 			r.pred <- matrix( as.vector( unlist( r.pred.1 )), byrow=T, nrow=length( r.pred.1 ))
 		}
 		
+		# mean & var
+		means <- colMeans( r.pred, na.rm=TRUE )
+		vars <- diag( var( r.pred, na.rm=TRUE ))
 
-		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 & !all( is.na( object@hts.test )) ))
+		if ( !OOB | length( object@hts.test ) == 1 )
+		{
+			M <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=NA, cor.S.pv=NA, cor.P=NA, cor.P.pv=NA, means=means, vars=as.vector( vars ), OOB=OOB )
+		} else if ( OOB | ( nrow( object@hts.test ) == object@no.test & nrow( object@hts.test ) > 2 & !all( is.na( object@hts.test )) ))
 		{
 			# Spearman correlation
 			cor.S <- diag( cor( r.f, r.pred, method="spearman" ))
@@ -251,23 +257,13 @@ train.and.predict.txs <-
 			# Pearson correlation
 			cor.P <- diag( cor( r.f, r.pred, method="pearson" ))
 			cor.P.pv <- NA
-		}
 
-		# mean & var
-		means <- colMeans( r.pred, na.rm=TRUE )
-		vars <- diag( var( r.pred, na.rm=TRUE ))
-		
-		if ( OOB | ( dim( object@hts.test )[1] == object@no.test & dim( object@hts.test )[1] > 2 & !all( is.na( object@hts.test )) ))
-		{
-			m <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
-		} else
-		{
-			m <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=NA, cor.S.pv=NA, cor.P=NA, cor.P.pv=NA, means=means, vars=as.vector( vars ), OOB=OOB )
+			M <- list( gene.id=object@gene.id, tx.id=object@tx.id, no.txs=object@no.txs, no.samples=object@no.test, trues=r.f, predictions=r.pred, cor.S=cor.S, cor.S.pv=cor.S.pv, cor.P=cor.P, cor.P.pv=cor.P.pv, means=means, vars=as.vector( vars ), OOB=OOB )
 		}
-	
-		m.obj <- TT.Seq.Tx( m )
 		
-		return( m.obj )			
+		M.obj <- TT.Seq.Tx( M )
+		
+		return( M.obj )
 	}
 }
 

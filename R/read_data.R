@@ -3,7 +3,7 @@
 #
 .numerise <- function( m, PCs.present=FALSE, train.PCs=NULL, test.PCs=NULL )	# function to make all variables into numbers
 {
-	if ( is.na( m$hts.test ) )
+	if ( all( is.na( m$hts.test )) )
 	{
 		hts.test <- NA
 	} else 
@@ -43,7 +43,7 @@
 #
 .numerise.txs <- function( m )
 {
-	if ( is.na( m$hts.test ) )
+	if ( all( is.na( m$hts.test )) )
 	{
 		hts.test <- NA
 	} else
@@ -52,7 +52,7 @@
 	}
 	hts.train <- matrix( as.vector( unlist( lapply( strsplit( m$hts.train, "," ), as.numeric ))), nrow=m$no.train )
 	
-	if ( is.na( m$probes.train ))
+	if ( is.na( m$probes.train ) | is.na( m$probes.test )q)
 	{	
 	   probes.train <- NA
 	   probes.test <- NA
