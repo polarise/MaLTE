@@ -200,7 +200,7 @@ def make_txs_data( f, g_f, g2tx_D, design="train", ofn="_txs_data.txt.gz", waste
 			missing_genes += 1
 			continue
 		else:
-			if rs.count( "NA" ) == no_txs: rs = [ "NA" ] # to remove multiple NAs
+			if rs.count( "NA" ) == len( rs ): rs = [ "NA" ] # to remove multiple NAs
 			print >> h, "\t".join( [ g, ",".join( present_txs ), str( len( present_txs )), L[1], L[2], L[3], ",".join( rs ), L[5] ] )	
 		c += 0
 	
