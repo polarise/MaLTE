@@ -187,7 +187,7 @@ def make_txs_data( f, g_f, g2tx_D, design="train", ofn="_txs_data.txt.gz", waste
 		present_txs = list()
 		for t in txs:
 			try:
-				rs += [ rs_data[t] ]
+				rs += [ rs_data[t] ] # will return multiple NAs making downstream data messy!
 			except KeyError:
 				print >> w, t
 				missing_txs += 1
@@ -200,6 +200,7 @@ def make_txs_data( f, g_f, g2tx_D, design="train", ofn="_txs_data.txt.gz", waste
 			missing_genes += 1
 			continue
 		else:
+			if rs.count( "NA" ) == no_txs: rs = [ "NA" ] # to remove multiple NAs
 			print >> h, "\t".join( [ g, ",".join( present_txs ), str( len( present_txs )), L[1], L[2], L[3], ",".join( rs ), L[5] ] )	
 		c += 0
 	
