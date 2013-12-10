@@ -10,7 +10,7 @@ Reads in the training and test data obtained from the raw dataa and converts the
 }
 
 \usage{
-read.data(train.fn, test.fn, PCs.present=FALSE, train.PCs.fn="train_PCs.txt", test.PCs.fn="test_PCs.txt")
+read.data(train.fn, test.fn, PCs.present=FALSE, train.PCs.fn=NULL, test.PCs.fn=NULL)
 }
 
 \arguments{
