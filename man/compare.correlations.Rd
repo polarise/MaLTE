@@ -13,12 +13,14 @@ columns prefixed by 'affy' denote summarisation; the last two are due to MaLTE.
 }
 
 \usage{
-compare.correlations(tt.seq, affy.fn)
+compare.correlations(tt.seq, affy.fn, raised=FALSE)
 }
 
 \arguments{
   \item{tt.seq}{a list with objects of class \code{TT.Seq.Gene}}
   \item{affy.fn}{the filename of the summarisation data; see Notes below}
+  \item{raised}{logical; whether to expression estimates to the power of two 
+  (for RMA); default is \code{FALSE}}
 }
 
 \value{

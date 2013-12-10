@@ -66,10 +66,12 @@
 	}
 }
 
-compare.correlations <- function( tt.seq, affy.fn )
+compare.correlations <- function( tt.seq, affy.fn, raised=FALSE )
 {
 	# read in the Affymetrix RMA/PLIER (or other summarisation) results
-	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F, check.names=F, comment.char="#" )
+	affy.mixed.test <- read.table( affy.fn, header=TRUE, stringsAsFactors=FALSE, check.names=FALSE, comment.char="#" )
+	if ( raised )
+		affy.mixed.test[,2:ncol(affy.mixed.test)] <- 2**(affy.mixed.test[,2:ncol(affy.mixed.test)])
 	
 	# convert it to a list
 	affy.mixed.test.list <- apply( affy.mixed.test, 1, .df_to_list )
@@ -114,14 +116,16 @@ cors.S <- function( tt.seq )
 	return( cors )
 }
 
-within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", check.names=TRUE  )
+within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", check.names=TRUE, raised=FALSE  )
 {
 	# make sure the affy.name is valid
 	if ( check.names )
 		affy.name <- make.names( affy.name ) # 'median-polish' becomes 'median.polish'
 	
 	# read in the Affymetrix RMA/PLIER (or other summarisation) results
-	affy.mixed.test <- read.table( affy.fn, header=T, stringsAsFactors=F, check.names=F, comment.char="#" )
+	affy.mixed.test <- read.table( affy.fn, header=TRUE, stringsAsFactors=FALSE, check.names=FALSE, comment.char="#" )
+	if ( raised )
+		affy.mixed.test[,2:ncol(affy.mixed.test)] <- 2**(affy.mixed.test[,2:ncol(affy.mixed.test)])
 	
 	# convert it to a list
 	affy.mixed.test.list <- apply( affy.mixed.test, 1, .df_to_list )

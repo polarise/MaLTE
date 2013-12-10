@@ -13,7 +13,7 @@ having slots for Pearson and Spearman correlation estimates.
 
 \usage{
 within_correlations(tt.seq, affy.fn, affy.name="median_polish", 
-	check.names=TRUE)
+	check.names=TRUE, raised=FALSE)
 }
 
 \arguments{
@@ -22,6 +22,8 @@ within_correlations(tt.seq, affy.fn, affy.name="median_polish",
   \item{affy.name}{the name to be used to identify this Affymetrix 
   	summarisation}
   \item{check.names}{ensure that \code{affy.name} is a valid \code{R} variable}
+  \item{raised}{logical; whether to expression estimates to the power of two 
+  (for RMA); default is \code{FALSE}}
 }
 
 \value{
