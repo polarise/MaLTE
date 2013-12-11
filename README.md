@@ -10,6 +10,10 @@ TODO:
 - make prepare_data parallel (DONE)
 
 News:
+0.3-1:
+- Added filtering by FPKM and count for comparing to med-pol and PLIER
+	compare.correlations(...)
+
 0.3-0: EXPERIMENTAL (forked as 'princomps' branch)
 - Augmented samples.txt to now include principal components
 

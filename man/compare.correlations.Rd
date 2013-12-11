@@ -13,7 +13,8 @@ columns prefixed by 'affy' denote summarisation; the last two are due to MaLTE.
 }
 
 \usage{
-compare.correlations(tt.seq, affy.fn, raised=FALSE)
+compare.correlations(tt.seq, affy.fn, raised=FALSE, filter.fpkm=0, 
+	filter.count=0)
 }
 
 \arguments{
@@ -21,6 +22,12 @@ compare.correlations(tt.seq, affy.fn, raised=FALSE)
   \item{affy.fn}{the filename of the summarisation data; see Notes below}
   \item{raised}{logical; whether to expression estimates to the power of two 
   (for RMA); default is \code{FALSE}}
+  \item{filter.fpkm}{the minimum FPKM to consider as expressed in RNA-Seq; used
+  	together with \code{filter.count}; if there are at least \code{filter.count}
+  	samples with at least \code{filter.fpkm} FPKM then consider this gene; 
+  	otherwise give it \code{NA}s}
+  \item{filter.count}{the minimum number of samples needed to cross the 
+  \code{filter.fpkm} FPKM threshold for comparisons to be carried out}
 }
 
 \value{

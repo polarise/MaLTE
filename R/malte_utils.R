@@ -1,4 +1,4 @@
-.paired_correlations <- function( gene, other.genes, affy.genes, other.list, affy.list )
+.paired_correlations <- function( gene, other.genes, affy.genes, other.list, affy.list, filter.fpkm=0, filter.count=0 )
 {
 	#
 	# input:
@@ -15,33 +15,39 @@
 	# get indexes
 	i <- which( other.genes == gene )
 	j <- which( affy.genes == gene )
-
-	if ( length( i ) == 0 )	# absent in MaLTE; present in Affy
-	{
-		cor.S = NA		# because the gene is absent
-		cor.P = NA
-		affy.cor.S = NA	# because there are no trues
-		affy.cor.P = NA
-	}	else if ( length( j ) == 0 ) # absent in Affy
-	{
-		cor.P <- other.list[[i]]@cor.P
-		cor.S <- other.list[[i]]@cor.S
-		affy.cor.S = NA 	# because it's absent in Affy
-		affy.cor.P = NA
-	} else
-	{		# both present
-		trues <- other.list[[i]]@trues
-		
-		affy <- affy.list[[j]]$affy
-		cor.P <- other.list[[i]]@cor.P
-		cor.S <- other.list[[i]]@cor.S
-		
-		# affy correlations
-		affy.cor.P <- cor.test( affy, trues )$estimate
-		affy.cor.S <- cor.test( affy, trues, method="spearman" )$estimate
-	}
 	
-	list( genes=gene, affy.cor.S=affy.cor.S, affy.cor.P=affy.cor.P, cor.S=cor.S, cor.P=cor.P )
+	if ( sum( other.list[[i]]@trues >= filter.fpkm, na.rm=TRUE ) >= filter.count ) # filter by FPKM filter.min in at least 
+	{
+		if ( length( i ) == 0 )	# absent in MaLTE; present in Affy
+		{
+			cor.S = NA		# because the gene is absent
+			cor.P = NA
+			affy.cor.S = NA	# because there are no trues
+			affy.cor.P = NA
+		}	else if ( length( j ) == 0 ) # absent in Affy
+		{
+			cor.P <- other.list[[i]]@cor.P
+			cor.S <- other.list[[i]]@cor.S
+			affy.cor.S = NA 	# because it's absent in Affy
+			affy.cor.P = NA
+		} else
+		{		# both present
+			trues <- other.list[[i]]@trues
+		
+			affy <- affy.list[[j]]$affy
+			cor.P <- other.list[[i]]@cor.P
+			cor.S <- other.list[[i]]@cor.S
+		
+			# affy correlations
+			affy.cor.P <- cor.test( affy, trues )$estimate
+			affy.cor.S <- cor.test( affy, trues, method="spearman" )$estimate
+		}
+	
+		list( genes=gene, affy.cor.S=affy.cor.S, affy.cor.P=affy.cor.P, cor.S=cor.S, cor.P=cor.P )
+	} else
+	{
+		list( genes=gene, affy.cor.S=NA, affy.cor.P=NA, cor.S=NA, cor.P=NA )
+	}
 }
 
 .df_to_list <- function( m )
@@ -66,7 +72,7 @@
 	}
 }
 
-compare.correlations <- function( tt.seq, affy.fn, raised=FALSE )
+compare.correlations <- function( tt.seq, affy.fn, raised=FALSE, filter.fpkm=0, filter.count=0 )
 {
 	# read in the Affymetrix RMA/PLIER (or other summarisation) results
 	affy.mixed.test <- read.table( affy.fn, header=TRUE, stringsAsFactors=FALSE, check.names=FALSE, comment.char="#" )
@@ -86,7 +92,7 @@ compare.correlations <- function( tt.seq, affy.fn, raised=FALSE )
 	aug.affy.mixed.test.list <- mclapply( affy.mixed.test.list, .add.trues.affy.list, tt.seq, genes  )
 
 	# perform gene-wise comparisons pair-wise
-	tt.seq.compared <- mclapply( intersect( genes, affy.genes ), .paired_correlations, genes, affy.genes, tt.seq, affy.mixed.test.list )
+	tt.seq.compared <- mclapply( intersect( genes, affy.genes ), .paired_correlations, genes, affy.genes, tt.seq, affy.mixed.test.list, filter.fpkm=filter.fpkm, filter.count=filter.count )
 
 	# collate the data
 	all.genes <- as.vector( sapply( tt.seq.compared, function( m ){ m$genes }))
