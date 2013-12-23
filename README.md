@@ -11,7 +11,11 @@ TODO:
 
 News
 ====
-0.3.-2:
+0.3-3:
+- Added quantile normalisation argument (based on limma R package) to the 
+	get.predictions() function together with corresponding documentation
+
+0.3-2:
 23-12-2013
 - Added filtering by Spearman correlation in 'oob.filter()' and added required
 	documentation

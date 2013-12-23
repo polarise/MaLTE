@@ -1,4 +1,4 @@
-get.predictions <- function( tt.seq, sample.names )
+get.predictions <- function( tt.seq, sample.names, qnorm=FALSE )
 {
 	# check that tt.seq is not empty
 
@@ -28,6 +28,12 @@ get.predictions <- function( tt.seq, sample.names )
 		tt.p3 <- as.vector( tt.p2 )
 		tt.p4 <- matrix( tt.p3, nrow=length( tt.seq ), byrow=TRUE )
 		tt.predictions <- data.frame( tt.p4 )
+		
+		if ( qnorm )
+		{
+			cat( "Note: predictions will be quantile normalised.\n" )
+			tt.predictions = normalizeQuantiles( tt.predictions, ties=FALSE ) # do not allow ties
+		}
 		colnames( tt.predictions ) <- sample.names
 
 		# next deal with the gene names
@@ -76,6 +82,13 @@ get.predictions <- function( tt.seq, sample.names )
 		tt.p3 <- as.vector( tt.p2 )
 		tt.p4 <- matrix( tt.p3, nrow=length( txs.names ), byrow=TRUE )
 		tt.predictions <- data.frame( tt.p4 )
+		
+		if ( qnorm )
+		{
+			cat( "Note: predictions will be quantile normalised.\n" )
+			tt.predictions = normalizeQuantiles( tt.predictions, ties=FALSE )
+		}
+		
 		colnames( tt.predictions ) <- sample.names
 		
 		# put them all together

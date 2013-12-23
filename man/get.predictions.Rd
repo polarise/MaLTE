@@ -10,12 +10,13 @@ The sample names will be required in the output data when carrying out downstrea
 }
 
 \usage{
-get.predictions(tt.seq, sample.names)
+get.predictions(tt.seq, sample.names, qnorm=FALSE)
 }
 
 \arguments{
   \item{tt.seq}{an list of objects of class TT.Seq.Gene or TT.Seq.Tx}
   \item{sample.names}{a vector of the sample names; the output of get.names(samples.fn)}
+  \item{qnorm}{whether or not the predictions should be quantile-normalised; default: \code{TRUE}}
 }
 
 \value{

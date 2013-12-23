@@ -1,10 +1,10 @@
 Package: MaLTE
 Type: Package
 Title: Machine Learning of Transcript Expression (MaLTE)
-Version: 0.3-2
+Version: 0.3-3
 Date: 2013-05-13
 Author: Paul K. Korir
 Maintainer: Paul K. Korir <paul.korir@gmail.com>
-Depends: R (>= 2.14.0), methods, party, multicore, quantregForest
+Depends: R (>= 2.14.0), methods, party, multicore, quantregForest, limma
 Description: A package to implement the MaLTE framework
 License: GPL (>=3)
