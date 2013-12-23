@@ -30,7 +30,7 @@
 #
 #
 #
-oob.filter <- function( list.objects, list.objects.oob, thresh=0 )
+oob.filter <- function( list.objects, list.objects.oob, thresh=0, method="pearson" )
 {
 	# make sure that both lists are non-empty
 	
@@ -44,9 +44,20 @@ oob.filter <- function( list.objects, list.objects.oob, thresh=0 )
 	# check the class of object
 	if ( is( list.objects[[1]], "TT.Seq.Gene" ) & is( list.objects.oob[[1]], "TT.Seq.Gene" ) )
 	{
-		cor.P.oob <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P })) # get the OOB Pearsons
-		cor.P.oob.pv <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P.pv })) # get the OOB Pearson p-values
-		tt.filtered <- list.objects[ which( cor.P.oob > thresh & cor.P.oob.pv <= 0.05 ) ]
+		if ( method == "pearson" )
+		{
+			cor.P.oob <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P })) # get the OOB Pearsons
+			cor.P.oob.pv <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.P.pv })) # get the OOB Pearson p-values
+			tt.filtered <- list.objects[ which( cor.P.oob > thresh & cor.P.oob.pv <= 0.05 ) ]
+		} else if ( method == "spearman" )
+		{
+			cor.S.oob <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.S })) # get the OOB Spearman
+			cor.S.oob.pv <- as.vector( sapply( list.objects.oob, function( m ){ m@cor.S.pv })) # get the OOB Spearman p-values	
+			tt.filtered <- list.objects[ which( cor.S.oob > thresh & cor.S.oob.pv <= 0.05 ) ]
+		} else
+		{
+			stop( "Error: incorrect value in method argument; use either 'pearson' (default) or 'spearman'" )
+		}
 	} else
 	if ( is( list.objects[[1]], "TT.Seq.Tx" ) &	is( list.objects.oob[[1]], "TT.Seq.Tx" ) )
 	{

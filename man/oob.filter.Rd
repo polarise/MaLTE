@@ -10,13 +10,16 @@ Takes two lists of TT.Seq.Gene objects: using test data and using OOB estimates.
 }
 
 \usage{
-oob.filter(list.objects, list.objects.oob, thresh = 0)
+oob.filter(list.objects, list.objects.oob, thresh = 0, method="pearson")
 }
 
 \arguments{
   \item{list.objects}{a list of TT.Seq.Gene or TT.Seq.Tx objects}
   \item{list.objects.oob}{a list of TT.Seq.Gene or TT.Seq.Tx objects computed using the OOB estimates only}
   \item{thresh}{the threshold for correlation estimates; the default value thresh=0}
+  \item{method}{the correlation method values to use for filtering; can be either
+  	'pearson' (default) or 'spearman'; uses both the value of the correlation
+  	and the p-value (<= 0.05) except when applied to transcript isoforms}
 }
 
 \value{

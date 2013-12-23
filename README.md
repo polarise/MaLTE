@@ -9,10 +9,22 @@ TODO:
 - add ComBat stuff (NOPE)
 - make prepare_data parallel (DONE)
 
-News:
+News
+====
+0.3.-2:
+23-12-2013
+- Added filtering by Spearman correlation in 'oob.filter()' and added required
+	documentation
+
 0.3-1:
 - Added filtering by FPKM and count for comparing to med-pol and PLIER
 	compare.correlations(...)
+- Added filtering by FPKM and count for comparing to med-pol and PLIER
+	within_correlations(...)
+- Made within_correlations(...) much faster by subbing the for{...} with
+	mclapply(...)
+
+0.3-0: FINAL (merged 'princomps' branch)
 
 0.3-0: EXPERIMENTAL (forked as 'princomps' branch)
 - Augmented samples.txt to now include principal components

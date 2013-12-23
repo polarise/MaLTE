@@ -13,7 +13,7 @@ having slots for Pearson and Spearman correlation estimates.
 
 \usage{
 within_correlations(tt.seq, affy.fn, affy.name="median_polish", 
-	check.names=TRUE, raised=FALSE)
+	check.names=TRUE, raised=FALSE, filter.fpkm=0, filter.count=0)
 }
 
 \arguments{
@@ -24,6 +24,12 @@ within_correlations(tt.seq, affy.fn, affy.name="median_polish",
   \item{check.names}{ensure that \code{affy.name} is a valid \code{R} variable}
   \item{raised}{logical; whether to expression estimates to the power of two 
   (for RMA); default is \code{FALSE}}
+  \item{filter.fpkm}{the minimum FPKM to consider as expressed in RNA-Seq; used
+  	together with \code{filter.count}; if there are at least \code{filter.count}
+  	samples with at least \code{filter.fpkm} FPKM then consider this gene; 
+  	otherwise give it \code{NA}s}
+  \item{filter.count}{the minimum number of samples needed to cross the 
+  \code{filter.fpkm} FPKM threshold for comparisons to be carried out}
 }
 
 \value{

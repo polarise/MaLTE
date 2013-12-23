@@ -122,8 +122,17 @@ cors.S <- function( tt.seq )
 	return( cors )
 }
 
-within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", check.names=TRUE, raised=FALSE  )
+.filter.trues = function( tt.seq, filter.fpkm=0, filter.count=0 )
 {
+	filter.index = as.vector( sapply( tt.seq, function( x ){ if ( sum( x@trues >= filter.fpkm, na.rm=TRUE ) >= filter.count ){ TRUE } else { FALSE }}))
+	return( filter.index )
+}
+
+within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", check.names=TRUE, raised=FALSE, filter.fpkm=0, filter.count=0 )
+{
+	# filter by FPKM for at least count samples
+	tt.seq = tt.seq[ .filter.trues( tt.seq, filter.fpkm=filter.fpkm, filter.count=filter.count ) ]
+	
 	# make sure the affy.name is valid
 	if ( check.names )
 		affy.name <- make.names( affy.name ) # 'median-polish' becomes 'median.polish'
@@ -160,7 +169,7 @@ within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", che
 
 	# calculate the within-sample correlation
 	# for each sample...
-	for ( i in 1:no.samples )
+	get.within.sample = function( i, tt.seq, aug.affy.mixed.test.list )
 	{
 		# get the true estimates (RNA-Seq) and MaLTE predictions from tt.seq list
 		samp.trues <- as.vector( unlist( lapply( tt.seq, function( m ){ m@trues[i] })))
@@ -177,7 +186,7 @@ within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", che
 		# compute respective correlations for summarisation
 		affy.cor.P <- as.vector( cor.test( affy.trues, affy.preds )$estimate )
 		affy.cor.S <- as.vector( cor.test( affy.trues, affy.preds, method="spearman" )$estimate )
-	
+		
 		# append correlations to the data frame for MaLTE
 		within.cors.P <- c( within.cors.P, cor.P )
 		within.cors.S <- c( within.cors.S, cor.S )
@@ -185,7 +194,44 @@ within_correlations <- function( tt.seq, affy.fn, affy.name="median_polish", che
 		# append correlations to the data frame for summarisation
 		affy.within.cors.P <- c( affy.within.cors.P, affy.cor.P )
 		affy.within.cors.S <- c( affy.within.cors.S, affy.cor.S )
+		
+		return( list( within.cors.P=within.cors.P, within.cors.S=within.cors.S,
+			affy.within.cors.P =affy.within.cors.P, affy.within.cors.S=affy.within.cors.S ))	
 	}
+	
+	within.cors = mclapply( 1:no.samples, get.within.sample, tt.seq, aug.affy.mixed.test.list )
+	
+	within.cors.P = as.vector( sapply( within.cors, function( x ){ x$within.cors.P }))
+	within.cors.S = as.vector( sapply( within.cors, function( x ){ x$within.cors.S }))
+	affy.within.cors.P = as.vector( sapply( within.cors, function( x ){ x$affy.within.cors.P }))
+	affy.within.cors.S = as.vector( sapply( within.cors, function( x ){ x$affy.within.cors.S }))
+	
+#	for ( i in 1:no.samples )
+#	{
+#		# get the true estimates (RNA-Seq) and MaLTE predictions from tt.seq list
+#		samp.trues <- as.vector( unlist( lapply( tt.seq, function( m ){ m@trues[i] })))
+#		samp.preds <- as.vector( unlist( lapply( tt.seq, function( m ){ m@predictions[i] })))
+#	
+#		# get the true estimates and summarisations from aug.affy.mixed.test.list
+#		affy.trues <- as.vector( unlist( lapply( aug.affy.mixed.test.list, function( m ){ m$trues[i] })))
+#		affy.preds <- as.vector( unlist( lapply( aug.affy.mixed.test.list, function( m ){ m$predictions[i] })))
+#	
+#		# compute respective correlations for MaLTE
+#		cor.P <- as.vector( cor.test( samp.trues, samp.preds )$estimate )
+#		cor.S <- as.vector( cor.test( samp.trues, samp.preds, method="spearman" )$estimate )
+#	
+#		# compute respective correlations for summarisation
+#		affy.cor.P <- as.vector( cor.test( affy.trues, affy.preds )$estimate )
+#		affy.cor.S <- as.vector( cor.test( affy.trues, affy.preds, method="spearman" )$estimate )
+#	
+#		# append correlations to the data frame for MaLTE
+#		within.cors.P <- c( within.cors.P, cor.P )
+#		within.cors.S <- c( within.cors.S, cor.S )
+#	
+#		# append correlations to the data frame for summarisation
+#		affy.within.cors.P <- c( affy.within.cors.P, affy.cor.P )
+#		affy.within.cors.S <- c( affy.within.cors.S, affy.cor.S )
+#	}
 
 	# some ad hoc stuff
 	# put the Pearsons together
