@@ -60,7 +60,7 @@ def get_data( f_fn, g_fn, ma_L, platform="ma", column=1 ):
 		L = row.strip().split( '\t' )
 		
 		# make and print the header
-		if (row[0] == 'p' or row[0] == 'g') and row_count == 0:
+		if (row[0] == 'p' or row[0] == 'g' or row[0] == 't') and row_count == 0:
 			names_L = L[index:]
 			if platform == "ma":
 				print >> g, "\t".join( [ L[0], L[column] ] + ma_L )
@@ -71,7 +71,7 @@ def get_data( f_fn, g_fn, ma_L, platform="ma", column=1 ):
 					print >> g, "\t".join( [ L[0] ] + ma_L )
 			row_count += 1
 			continue
-		elif row[0] != 'p' and row[0] != 'g' and row_count == 0:
+		elif row[0] != 'p' and row[0] != 'g' and row[0] != 't' and row_count == 0:
 			print >> sys.stderr, "Error: missing header in HTS/microarray data file. Please amend and retry."
 			sys.exit( 1 )
 
